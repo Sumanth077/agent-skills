@@ -34,9 +34,17 @@ Select the appropriate actor based on user needs:
 | Local businesses | `compass/crawler-google-places` | Restaurants, gyms, shops | [Schema](reference/actors/compass-crawler-google-places.md) |
 | Contact enrichment | `vdrmota/contact-info-scraper` | Emails, phones from URLs | [Schema](reference/actors/vdrmota-contact-info-scraper.md) |
 | Instagram profiles | `apify/instagram-profile-scraper` | Influencer discovery | [Schema](reference/actors/apify-instagram-profile-scraper.md) |
+| Instagram posts/comments | `apify/instagram-scraper` | Posts, comments, hashtags, places | [Schema](reference/actors/apify-instagram-scraper.md) |
+| Instagram search | `apify/instagram-search-scraper` | Places, users, hashtags discovery | [Schema](reference/actors/apify-instagram-search-scraper.md) |
+| TikTok videos/hashtags | `clockworks/tiktok-scraper` | Comprehensive TikTok data extraction | [Schema](reference/actors/clockworks-tiktok-scraper.md) |
+| TikTok hashtags/profiles | `clockworks/free-tiktok-scraper` | Free TikTok data extractor | [Schema](reference/actors/clockworks-free-tiktok-scraper.md) |
+| TikTok user search | `clockworks/tiktok-user-search-scraper` | Find users by keywords | [Schema](reference/actors/clockworks-tiktok-user-search-scraper.md) |
 | TikTok profiles | `clockworks/tiktok-profile-scraper` | Creator outreach | [Schema](reference/actors/clockworks-tiktok-profile-scraper.md) |
+| TikTok followers/following | `clockworks/tiktok-followers-scraper` | Audience analysis, segmentation | [Schema](reference/actors/clockworks-tiktok-followers-scraper.md) |
 | Facebook pages | `apify/facebook-pages-scraper` | Business contacts | [Schema](reference/actors/apify-facebook-pages-scraper.md) |
+| Facebook page contacts | `apify/facebook-page-contact-information` | Extract emails, phones, addresses | [Schema](reference/actors/apify-facebook-page-contact-information.md) |
 | Facebook groups | `apify/facebook-groups-scraper` | Buying intent signals | [Schema](reference/actors/apify-facebook-groups-scraper.md) |
+| Facebook events | `apify/facebook-events-scraper` | Event networking, partnerships | [Schema](reference/actors/apify-facebook-events-scraper.md) |
 | Google Search | `apify/google-search-scraper` | Broad lead discovery | [Schema](reference/actors/apify-google-search-scraper.md) |
 | YouTube channels | `streamers/youtube-scraper` | Creator partnerships | [Schema](reference/actors/streamers-youtube-scraper.md) |
 | Google Maps emails | `poidata/google-maps-email-extractor` | Direct email extraction | [Schema](reference/actors/poidata-google-maps-email-extractor.md) |

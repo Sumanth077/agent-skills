@@ -29,6 +29,13 @@ Scrapes company details including websites, ratings, and contact info for target
 
 Collects follower metrics, engagement stats, bio links, and contact details to evaluate potential partnerships.
 
+### Local Business Discovery on Instagram
+
+**Bakery supplier finding potential customers:**
+> "Find bakeries in Prague on Instagram"
+
+Discovers local businesses, their contact details, categories, opening hours, and recent posts - perfect for local B2B prospecting.
+
 ### Contact Enrichment
 
 **Marketing team enriching their CRM:**
@@ -57,6 +64,13 @@ Collects follower counts, engagement rates, bio links, and contact details for i
 
 Extracts subscriber counts, engagement metrics, and channel contact info for sponsorship outreach.
 
+### Event Networking and Partnerships
+
+**Tech startup building industry connections:**
+> "Find startup and tech networking events in San Francisco"
+
+Discovers industry events with attendee counts, organizer information, and event details - ideal for identifying networking opportunities, sponsorship targets, and partnership prospects.
+
 ### Partnership Development
 
 **Tour company building local partnerships:**
@@ -70,6 +84,13 @@ Scrapes business details including websites and emails to propose collaborations
 > "Add missing emails and phone numbers from these company Facebook pages"
 
 Fills gaps in your CRM by extracting verified contact info from social profiles.
+
+### Business Contact Extraction
+
+**B2B sales team building contact database:**
+> "Get contact information for these Facebook business pages: @company1, @company2"
+
+Extracts emails, phone numbers, addresses, and websites directly from Facebook business pages - faster than manual research.
 
 ## How to Use
 
@@ -92,10 +113,11 @@ Claude will:
 |----------|----------|
 | Google Maps | Local businesses, restaurants, shops |
 | Websites | Contact enrichment (emails, phones, socials) |
-| Instagram | Influencer discovery, creator outreach |
-| TikTok | Creator partnerships, trend research |
+| Instagram | Influencer discovery, local businesses, hashtag research |
+| TikTok | Creator partnerships, trend research, audience analysis |
 | Facebook Pages | Business contacts, brand research |
 | Facebook Groups | Buying intent signals |
+| Facebook Events | Event networking, partnerships, attendee discovery |
 | LinkedIn | B2B prospecting |
 | YouTube | Creator partnerships |
 | Google Search | Broad lead discovery |

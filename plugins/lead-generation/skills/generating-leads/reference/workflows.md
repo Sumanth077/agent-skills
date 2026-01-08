@@ -178,7 +178,102 @@ uv run --with python-dotenv --with requests \
 
 ---
 
-## Workflow 6: B2B Lead List Building
+## Workflow 6: Facebook Event Networking
+
+Discover networking opportunities and event-based leads through Facebook events.
+
+### Checklist
+
+```
+Task Progress:
+- [ ] Get search query or event category from user
+- [ ] Ask for location/filters (optional)
+- [ ] Ask max events to scrape
+- [ ] Run Facebook Events Scraper
+- [ ] Identify high-engagement events and organizers
+```
+
+### Example Interaction
+
+**User:** "Find tech startup events in San Francisco"
+
+**Response:**
+1. Ask: "How many events should I scrape? (default: 50)"
+2. Ask: "Would you like the results in CSV or JSON format?"
+3. Run command:
+
+```bash
+uv run --with python-dotenv --with requests \
+  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  --actor "apify~facebook-events-scraper" \
+  --input '{"searchQueries": ["startup tech San Francisco"], "maxEvents": 50}' \
+  --output tech-events-sf.json \
+  --format json
+```
+
+4. Analyze results for:
+   - Events with high attendance (usersGoing, usersInterested)
+   - Active organizers (check organizators array)
+   - Upcoming events (isPast: false)
+   - Online vs. in-person (isOnline field)
+   - Contact opportunities (externalLinks, ticketsInfo)
+
+5. Report: "Found 42 tech startup events. Top 5 by attendance: Event A (500 going), Event B (350 going)... Identified 15 active event organizers for potential partnership outreach."
+
+### Tips
+- Combine topic + location for targeted results: "marketing conference Chicago"
+- Use Facebook's search filters for date ranges, then copy the filtered URL
+- Check `externalLinks` for registration pages and organizer websites
+- High `usersInterested` indicates strong market interest
+- Contact organizers via their profile URLs for sponsorship opportunities
+- Look for recurring events (check `duration` field) for ongoing engagement
+
+---
+
+## Workflow 7: Facebook Page Contact Extraction
+
+Extract contact information directly from Facebook business pages.
+
+### Checklist
+
+```
+Task Progress:
+- [ ] Get Facebook page URLs or handles from user
+- [ ] Ask for output format (CSV/JSON)
+- [ ] Run Facebook Page Contact Information Scraper
+- [ ] Report contact details found (emails, phones, addresses)
+```
+
+### Example Interaction
+
+**User:** "Get contact information for these Facebook pages: @starbucks, @chipotle"
+
+**Response:**
+1. Ask: "Would you like the results in CSV or JSON format?"
+2. Suggest filename: `facebook-page-contacts.csv`
+3. Run command:
+
+```bash
+uv run --with python-dotenv --with requests \
+  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  --actor "apify~facebook-page-contact-information" \
+  --input '{"pages": ["starbucks", "chipotle"], "language": "en-US"}' \
+  --output facebook-page-contacts.csv \
+  --format csv
+```
+
+4. Report: "Found contact details for 2 pages. Extracted: 2 email addresses, 2 phone numbers, 2 physical addresses, 2 websites."
+
+### Tips
+- Use short handles (e.g., "starbucks") or full URLs (e.g., "https://www.facebook.com/starbucks/")
+- Not all pages display email or phone publicly - results vary by page completeness
+- Check `likes`, `checkins`, and `rating` fields to prioritize high-value leads
+- Use geographic data (city, country, latitude, longitude) for territory planning
+- Combine with Facebook Pages Scraper for more comprehensive business data
+
+---
+
+## Workflow 8: B2B Lead List Building
 
 Build a comprehensive B2B lead list combining multiple sources.
 
@@ -210,7 +305,7 @@ Task Progress:
 
 ---
 
-## Workflow 7: YouTube Creator Lead Generation
+## Workflow 9: YouTube Creator Lead Generation
 
 Find YouTube creators making content about a specific topic.
 
