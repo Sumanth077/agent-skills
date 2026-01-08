@@ -1,7 +1,7 @@
 {
   "name": "lead-generation",
   "description": "Generate B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search using Apify Actors",
-  "version": "2.0.13",
+  "version": "2.0.14",
   "author": {
     "name": "Apify",
     "email": "support@apify.com"
