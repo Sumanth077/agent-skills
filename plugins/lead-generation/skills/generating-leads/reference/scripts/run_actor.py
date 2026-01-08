@@ -6,7 +6,14 @@
 Apify Actor Runner - Runs Apify actors and exports results.
 
 Usage:
+    # Quick answer (display in chat, no file saved)
+    uv run scripts/run_actor.py --actor ACTOR_ID --input '{}'
+
+    # Export to file
     uv run scripts/run_actor.py --actor ACTOR_ID --input '{}' --output leads.csv --format csv
+
+    # Export basic fields only
+    uv run scripts/run_actor.py --actor ACTOR_ID --input '{}' --output leads.csv --format csv --fields basic
 """
 
 import argparse
@@ -18,6 +25,29 @@ from pathlib import Path
 
 from dotenv import load_dotenv, find_dotenv
 import requests
+
+
+# Essential fields per actor for basic output mode
+ESSENTIAL_FIELDS = {
+    "compass~crawler-google-places": ["title", "url", "address", "phone", "website", "totalScore", "reviewsCount", "categoryName"],
+    "poidata~google-maps-email-extractor": ["name", "url", "address", "phone", "emails", "website", "rating", "social"],
+    "apify~instagram-scraper": ["url", "ownerUsername", "caption", "likesCount", "commentsCount", "timestamp"],
+    "apify~instagram-profile-scraper": ["username", "url", "fullName", "followersCount", "postsCount", "biography", "externalUrl", "verified"],
+    "apify~instagram-search-scraper": ["username", "url", "fullName", "followersCount", "biography", "externalUrl", "verified", "name", "inputUrl", "category", "phone", "location_address", "location_city", "media_count"],
+    "apify~instagram-tagged-scraper": ["url", "caption", "timestamp", "commentsCount", "hashtags"],
+    "clockworks~tiktok-scraper": ["webVideoUrl", "authorMeta.name", "authorMeta.nickName", "text", "playCount", "diggCount", "commentCount", "authorMeta.fans"],
+    "clockworks~free-tiktok-scraper": ["webVideoUrl", "authorMeta.name", "authorMeta.nickName", "text", "playCount", "diggCount", "authorMeta.fans"],
+    "clockworks~tiktok-profile-scraper": ["webVideoUrl", "authorMeta.name", "authorMeta.nickName", "authorMeta.fans", "authorMeta.bioLink", "playCount", "diggCount"],
+    "clockworks~tiktok-followers-scraper": ["authorMeta.name", "authorMeta.profileUrl", "authorMeta.nickName", "authorMeta.fans", "authorMeta.verified", "authorMeta.bioLink", "connectionType"],
+    "clockworks~tiktok-user-search-scraper": ["name", "nickName", "fans", "video", "verified", "signature", "bioLink"],
+    "apify~facebook-pages-scraper": ["title", "pageUrl", "email", "phone", "website", "address", "likes", "followers"],
+    "apify~facebook-page-contact-information": ["pageName", "pageUrl", "email", "phone", "website", "address", "city", "category"],
+    "apify~facebook-groups-scraper": ["url", "user.name", "text", "time", "likesCount", "commentsCount", "groupTitle"],
+    "apify~facebook-events-scraper": ["name", "url", "dateTimeSentence", "location.name", "location.contextualName", "usersGoing", "usersInterested", "organizedBy"],
+    "vdrmota~contact-info-scraper": ["domain", "emails", "phones", "linkedIns", "facebooks", "instagrams", "twitters"],
+    "apify~google-search-scraper": ["title", "url", "description", "rank"],
+    "streamers~youtube-scraper": ["title", "url", "channelName", "channelUrl", "viewCount", "likes", "numberOfSubscribers"],
+}
 
 
 def main():
@@ -49,11 +79,14 @@ def main():
         print(f"Details: https://console.apify.com/actors/runs/{run_id}", file=sys.stderr)
         sys.exit(1)
 
-    # Download results
-    download_results(token, dataset_id, args.output, args.format)
-
-    # Report summary
-    report_summary(args.output, args.format)
+    # Determine output mode
+    if args.output:
+        # File output mode
+        download_results(token, dataset_id, args.output, args.format, args.fields, args.actor)
+        report_summary(args.output, args.format)
+    else:
+        # Quick answer mode - display in chat
+        display_quick_answer(token, dataset_id, args.actor)
 
 
 def parse_args():
@@ -61,24 +94,35 @@ def parse_args():
         description="Run Apify actor and export results",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
+Output Formats:
+  JSON (all data)     --output file.json --format json
+  CSV (all data)      --output file.csv --format csv
+  CSV (basic fields)  --output file.csv --format csv --fields basic
+  Quick answer        (no --output) - displays top 5 in chat
+
 Examples:
-  # Find coffee shops in Seattle, export as CSV
+  # Quick answer - display top 5 in chat
   uv run scripts/run_actor.py \\
-    --actor "compass~crawler-google-places" \\
+    --actor "compass/crawler-google-places" \\
+    --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}'
+
+  # Export all data to CSV
+  uv run scripts/run_actor.py \\
+    --actor "compass/crawler-google-places" \\
     --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}' \\
     --output leads.csv --format csv
 
-  # Extract contacts from websites, export as JSON
+  # Export basic fields only
   uv run scripts/run_actor.py \\
-    --actor "vdrmota~contact-info-scraper" \\
-    --input '{"startUrls": [{"url": "https://example.com"}]}' \\
-    --output contacts.json --format json
+    --actor "compass/crawler-google-places" \\
+    --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}' \\
+    --output leads.csv --format csv --fields basic
         """,
     )
     parser.add_argument(
         "--actor",
         required=True,
-        help="Actor ID (e.g., compass~crawler-google-places)",
+        help="Actor ID (e.g., compass/crawler-google-places)",
     )
     parser.add_argument(
         "--input",
@@ -87,14 +131,19 @@ Examples:
     )
     parser.add_argument(
         "--output",
-        required=True,
-        help="Output file path",
+        help="Output file path (optional - if not provided, displays quick answer in chat)",
     )
     parser.add_argument(
         "--format",
         default="csv",
         choices=["csv", "json"],
         help="Output format (default: csv)",
+    )
+    parser.add_argument(
+        "--fields",
+        default="all",
+        choices=["all", "basic"],
+        help="Fields to include: all (default) or basic (essential fields only)",
     )
     parser.add_argument(
         "--timeout",
@@ -169,18 +218,123 @@ def poll_until_complete(
         time.sleep(interval)
 
 
+def get_nested_value(obj: dict, key: str):
+    """Get value from nested dict using dot notation (e.g., 'authorMeta.name')."""
+    keys = key.split('.')
+    value = obj
+    for k in keys:
+        if isinstance(value, dict) and k in value:
+            value = value[k]
+        else:
+            return None
+    return value
+
+
+def filter_fields(items: list, fields: list) -> list:
+    """Filter items to only include specified fields."""
+    filtered = []
+    for item in items:
+        filtered_item = {}
+        for field in fields:
+            value = get_nested_value(item, field)
+            if value is not None:
+                # Flatten nested field names for output
+                flat_key = field.replace('.', '_')
+                filtered_item[flat_key] = value
+        filtered.append(filtered_item)
+    return filtered
+
+
 def download_results(
-    token: str, dataset_id: str, output_path: str, format: str
+    token: str, dataset_id: str, output_path: str, format: str, fields: str, actor_id: str
 ) -> None:
     """Download dataset items in specified format."""
     url = f"https://api.apify.com/v2/datasets/{dataset_id}/items"
-    params = {"token": token, "format": format}
+    params = {"token": token, "format": "json"}  # Always fetch as JSON first for filtering
 
     response = requests.get(url, params=params)
     response.raise_for_status()
 
-    Path(output_path).write_bytes(response.content)
+    data = response.json()
+
+    # Filter fields if basic mode
+    if fields == "basic":
+        actor_key = actor_id.replace("/", "~")
+        essential = ESSENTIAL_FIELDS.get(actor_key, [])
+        if essential:
+            data = filter_fields(data, essential)
+
+    # Write output
+    if format == "json":
+        Path(output_path).write_text(json.dumps(data, indent=2))
+    else:
+        # CSV output
+        if data:
+            import csv
+            fieldnames = list(data[0].keys()) if data else []
+            with open(output_path, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                for row in data:
+                    # Truncate long text fields and handle nested objects
+                    clean_row = {}
+                    for k, v in row.items():
+                        if isinstance(v, str) and len(v) > 200:
+                            clean_row[k] = v[:200] + "..."
+                        elif isinstance(v, (list, dict)):
+                            clean_row[k] = json.dumps(v) if v else ""
+                        else:
+                            clean_row[k] = v
+                    writer.writerow(clean_row)
+        else:
+            Path(output_path).write_text("")
+
     print(f"Saved to: {output_path}")
+
+
+def display_quick_answer(token: str, dataset_id: str, actor_id: str) -> None:
+    """Display top 5 results in chat format."""
+    url = f"https://api.apify.com/v2/datasets/{dataset_id}/items"
+    params = {"token": token, "format": "json"}
+
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+
+    data = response.json()
+    total = len(data)
+
+    if total == 0:
+        print("\nNo results found.")
+        return
+
+    # Get essential fields for this actor
+    actor_key = actor_id.replace("/", "~")
+    essential = ESSENTIAL_FIELDS.get(actor_key, [])
+
+    # Filter to essential fields
+    if essential:
+        data = filter_fields(data, essential)
+
+    # Display top 5
+    print(f"\n{'='*60}")
+    print(f"TOP 5 RESULTS (of {total} total)")
+    print(f"{'='*60}")
+
+    for i, item in enumerate(data[:5], 1):
+        print(f"\n--- Result {i} ---")
+        for key, value in item.items():
+            # Truncate long values
+            if isinstance(value, str) and len(value) > 100:
+                value = value[:100] + "..."
+            elif isinstance(value, (list, dict)):
+                value = json.dumps(value)[:100] + "..." if len(json.dumps(value)) > 100 else json.dumps(value)
+            print(f"  {key}: {value}")
+
+    print(f"\n{'='*60}")
+    if total > 5:
+        print(f"Showing 5 of {total} results.")
+    print(f"Full data available at: https://console.apify.com/storage/datasets/{dataset_id}")
+    print(f"{'='*60}")
 
 
 def report_summary(output_path: str, format: str) -> None:

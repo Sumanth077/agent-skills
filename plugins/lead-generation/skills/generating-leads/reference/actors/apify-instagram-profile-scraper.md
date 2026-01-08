@@ -92,3 +92,18 @@ Available when `includeAboutSection` is enabled:
 | `about.id` | Profile ID |
 | `about.is_verified` | Verification status |
 | `about.username` | Username |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `username` | Instagram handle |
+| 2 | `url` | Profile URL |
+| 3 | `fullName` | Display name |
+| 4 | `followersCount` | Number of followers |
+| 5 | `postsCount` | Total posts |
+| 6 | `biography` | Profile bio |
+| 7 | `externalUrl` | Website link |
+| 8 | `verified` | Verified status |

@@ -242,3 +242,16 @@ When `resultsType` is "details" for post URLs:
 | `isAdvertisement` | Advertisement flag |
 | `taggedUsers` | Array of tagged users |
 | `likedBy` | Array of users who liked (if available) |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `url` | Post URL |
+| 2 | `ownerUsername` | Author username |
+| 3 | `caption` | Post caption |
+| 4 | `likesCount` | Number of likes |
+| 5 | `commentsCount` | Number of comments |
+| 6 | `timestamp` | Post date |

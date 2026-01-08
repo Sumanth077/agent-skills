@@ -59,24 +59,58 @@ Read the corresponding reference doc from the table above to understand:
 ### Step 3: Ask User Preferences
 
 Before running, ask:
-1. **Output format**: CSV or JSON? (default: CSV)
-2. **Output filename**: Suggest descriptive name based on search
+1. **Output format**:
+   - **Quick answer** - Display top 5 results in chat (no file saved)
+   - **CSV (all data)** - Full export with all fields
+   - **CSV (basic fields)** - Export with essential fields only
+   - **JSON (all data)** - Full export in JSON format
+2. **Output filename** (if file output selected): Suggest descriptive name based on search
 
 ### Step 4: Run the Script
 
+**Quick answer (display in chat, no file):**
+```bash
+uv run --with python-dotenv --with requests \
+  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  --actor "ACTOR_ID" \
+  --input 'JSON_INPUT'
+```
+
+**CSV (all data):**
 ```bash
 uv run --with python-dotenv --with requests \
   ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
   --actor "ACTOR_ID" \
   --input 'JSON_INPUT' \
-  --output OUTPUT_FILE \
-  --format csv|json
+  --output OUTPUT_FILE.csv \
+  --format csv
+```
+
+**CSV (basic fields):**
+```bash
+uv run --with python-dotenv --with requests \
+  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  --actor "ACTOR_ID" \
+  --input 'JSON_INPUT' \
+  --output OUTPUT_FILE.csv \
+  --format csv \
+  --fields basic
+```
+
+**JSON (all data):**
+```bash
+uv run --with python-dotenv --with requests \
+  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  --actor "ACTOR_ID" \
+  --input 'JSON_INPUT' \
+  --output OUTPUT_FILE.json \
+  --format json
 ```
 
 The script handles:
 - Loading `APIFY_TOKEN` from `.env`
 - Starting and polling the Actor run
-- Downloading results in requested format
+- Downloading results in requested format (or displaying in chat)
 - Reporting record count and file size
 
 ### Step 5: Summarize Results
@@ -89,17 +123,26 @@ After completion, report:
 
 ## Quick Examples
 
-**Google Maps - Local businesses:**
+**Quick answer - display top 5 in chat:**
+```bash
+uv run --with python-dotenv --with requests \
+  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  --actor "compass/crawler-google-places" \
+  --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA", "maxCrawledPlacesPerSearch": 50}'
+```
+
+**Google Maps - CSV with basic fields:**
 ```bash
 uv run --with python-dotenv --with requests \
   ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA", "maxCrawledPlacesPerSearch": 50}' \
   --output coffee-shops-seattle.csv \
-  --format csv
+  --format csv \
+  --fields basic
 ```
 
-**Contact enrichment from websites:**
+**Contact enrichment - full JSON export:**
 ```bash
 uv run --with python-dotenv --with requests \
   ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \

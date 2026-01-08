@@ -128,3 +128,17 @@ Available when `downloadSubtitles` is enabled:
 |-------|-------------|
 | `fromYTUrl` | Original input URL that generated this result (useful when scraping multiple URLs or search terms) |
 | `inputChannelUrl` | Original channel URL input (when scraping channel about page) |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `title` | Video title |
+| 2 | `url` | Video URL |
+| 3 | `channelName` | Channel name |
+| 4 | `channelUrl` | Channel URL |
+| 5 | `viewCount` | Views |
+| 6 | `likes` | Likes |
+| 7 | `numberOfSubscribers` | Subscribers |

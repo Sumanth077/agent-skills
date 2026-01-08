@@ -16,6 +16,10 @@ Official Apify plugin marketplace for Claude Code - enabling web scraping, data 
 /plugin install lead-generation@apify
 ```
 
+### Verify installation
+
+Run `/skills` to check if the plugin was installed successfully. If you don't see the skill listed, try restarting Claude Code.
+
 ## Prerequisites
 
 1. **Apify Account**: Sign up at [apify.com](https://apify.com)

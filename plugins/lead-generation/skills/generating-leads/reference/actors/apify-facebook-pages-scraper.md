@@ -95,3 +95,18 @@ Available only when scraping Facebook profiles (not pages):
 | Field | Description |
 |-------|-------------|
 | `personalProfile` | Object with personal profile data (name, gender, profile photos: small, medium, large) |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `title` | Page name |
+| 2 | `pageUrl` | Facebook URL |
+| 3 | `email` | Email |
+| 4 | `phone` | Phone |
+| 5 | `website` | Website |
+| 6 | `address` | Address |
+| 7 | `likes` | Page likes |
+| 8 | `followers` | Followers |

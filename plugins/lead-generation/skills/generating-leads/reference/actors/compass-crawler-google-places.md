@@ -551,3 +551,18 @@ If user declines premium features, suggest free/cheaper alternatives:
 | `rank` | Result ranking position |
 | `scrapedAt` | Timestamp when place was scraped |
 | `webResults` | Web search results (if includeWebResults enabled) |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `title` | Business name |
+| 2 | `url` | Google Maps link |
+| 3 | `address` | Full address |
+| 4 | `phone` | Phone number |
+| 5 | `website` | Website URL |
+| 6 | `totalScore` | Rating (1-5) |
+| 7 | `reviewsCount` | Number of reviews |
+| 8 | `categoryName` | Primary category |

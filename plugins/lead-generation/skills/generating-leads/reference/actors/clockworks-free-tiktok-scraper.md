@@ -123,3 +123,17 @@ Extract data about videos, users, and channels based on hashtags or scrape full 
 | `mentions` | Array of mentioned usernames |
 | `detailedMentions` | Array of detailed mention objects |
 | `effectStickers` | Array of effect stickers used |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `webVideoUrl` | Video URL |
+| 2 | `authorMeta.name` | Username |
+| 3 | `authorMeta.nickName` | Display name |
+| 4 | `text` | Video caption |
+| 5 | `playCount` | Views |
+| 6 | `diggCount` | Likes |
+| 7 | `authorMeta.fans` | Followers |

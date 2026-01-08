@@ -74,3 +74,17 @@ Scrape TikTok followers and following profiles from any account. Input a profile
 | `connectedTo.heart` | Total likes received |
 | `connectedTo.video` | Number of videos posted |
 | `connectedTo.digg` | Number of likes given |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `authorMeta.name` | Username |
+| 2 | `authorMeta.profileUrl` | Profile URL |
+| 3 | `authorMeta.nickName` | Display name |
+| 4 | `authorMeta.fans` | Followers |
+| 5 | `authorMeta.verified` | Verified status |
+| 6 | `authorMeta.bioLink` | Bio link |
+| 7 | `connectionType` | Follower/following |

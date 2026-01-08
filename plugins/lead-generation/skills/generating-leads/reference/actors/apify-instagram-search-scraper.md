@@ -181,3 +181,29 @@ Related hashtag object fields:
 |-------|-------------|
 | `hash` | Hashtag with # symbol |
 | `info` | Usage volume (e.g., "1.49 m", "70.35 k") |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+### Place Search
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `name` | Place name |
+| 2 | `inputUrl` | Instagram URL |
+| 3 | `category` | Business category |
+| 4 | `phone` | Phone number |
+| 5 | `location_address` | Address |
+| 6 | `location_city` | City |
+| 7 | `media_count` | Posts at location |
+
+### User Search
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `username` | Instagram handle |
+| 2 | `url` | Profile URL |
+| 3 | `fullName` | Display name |
+| 4 | `followersCount` | Followers |
+| 5 | `biography` | Bio |
+| 6 | `externalUrl` | Website |
+| 7 | `verified` | Verified status |

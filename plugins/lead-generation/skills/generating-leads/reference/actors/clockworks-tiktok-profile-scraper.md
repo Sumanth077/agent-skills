@@ -109,3 +109,17 @@ Scrape TikTok profiles and their video content.
 | `hashtags` | Array of hashtag objects with name |
 | `mentions` | Array of mentioned users |
 | `effectStickers` | Array of effect stickers used in video |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `webVideoUrl` | Video URL |
+| 2 | `authorMeta.name` | Username |
+| 3 | `authorMeta.nickName` | Display name |
+| 4 | `authorMeta.fans` | Followers |
+| 5 | `authorMeta.bioLink` | Bio link |
+| 6 | `playCount` | Views |
+| 7 | `diggCount` | Likes |

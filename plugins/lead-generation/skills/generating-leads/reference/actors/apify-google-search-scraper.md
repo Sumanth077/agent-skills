@@ -447,3 +447,14 @@ Available when `aiMode` is enabled or `perplexitySearch.enablePerplexity` is tru
 |-------|-------------|
 | `aiOverview` | Google AI Mode overview and analysis (when aiMode enabled) |
 | `perplexityAnswer` | Perplexity AI generated answer with citations (when perplexitySearch enabled) |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `title` | Result title |
+| 2 | `url` | Result URL |
+| 3 | `description` | Snippet |
+| 4 | `rank` | Position |

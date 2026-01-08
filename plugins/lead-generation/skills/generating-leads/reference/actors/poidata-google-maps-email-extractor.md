@@ -139,3 +139,18 @@ Extract emails, phone numbers, and social media links directly from Google Maps 
 - **Incremental Saving:** Results saved to dataset in real-time as they're processed
 - **Deduplication:** Unique businesses identified by `gid`, prevents duplicates across multiple search terms
 - **Concurrent Processing:** Websites processed at 5 requests per second for fast email extraction
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `name` | Business name |
+| 2 | `url` | Google Maps link |
+| 3 | `address` | Full address |
+| 4 | `phone` | Phone number |
+| 5 | `emails` | Email addresses |
+| 6 | `website` | Website URL |
+| 7 | `rating` | Star rating |
+| 8 | `social` | Social media links |

@@ -86,3 +86,17 @@ Top comment object fields:
 | `profileName` | Commenter's name |
 | `likesCount` | Number of likes on comment |
 | `threadingDepth` | Comment thread depth (0 for top-level comments) |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `url` | Post URL |
+| 2 | `user.name` | Author name |
+| 3 | `text` | Post content |
+| 4 | `time` | Post date |
+| 5 | `likesCount` | Likes |
+| 6 | `commentsCount` | Comments |
+| 7 | `groupTitle` | Group name |

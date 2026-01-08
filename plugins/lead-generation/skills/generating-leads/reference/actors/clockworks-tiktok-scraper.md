@@ -201,3 +201,18 @@ Comments are stored in a separate dataset referenced by `commentsDatasetURL` fie
 ### Downloaded Media (When Using Download Options)
 
 Downloaded videos and media are stored in a Key-Value Store, accessible via the storage tab.
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `webVideoUrl` | Video URL |
+| 2 | `authorMeta.name` | Username |
+| 3 | `authorMeta.nickName` | Display name |
+| 4 | `text` | Video caption |
+| 5 | `playCount` | Views |
+| 6 | `diggCount` | Likes |
+| 7 | `commentCount` | Comments |
+| 8 | `authorMeta.fans` | Follower count |

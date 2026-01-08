@@ -60,3 +60,15 @@ Each comment in `latestComments` includes:
 | `likesCount` | Number of likes on comment |
 | `repliesCount` | Number of replies to comment |
 | `replies` | Array of reply objects |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `url` | Post URL |
+| 2 | `caption` | Post text |
+| 3 | `timestamp` | Post date |
+| 4 | `commentsCount` | Number of comments |
+| 5 | `hashtags` | Hashtags used |

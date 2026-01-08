@@ -73,3 +73,18 @@ Extract contact details from Facebook business pages including addresses, email,
 | `priceRange` | Price range indicator (e.g., "$", "$$", "$$$") |
 | `rating` | Average rating score |
 | `reviewCount` | Number of reviews |
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `pageName` | Page name |
+| 2 | `pageUrl` | Facebook URL |
+| 3 | `email` | Email |
+| 4 | `phone` | Phone |
+| 5 | `website` | Website |
+| 6 | `address` | Full address |
+| 7 | `city` | City |
+| 8 | `category` | Category |

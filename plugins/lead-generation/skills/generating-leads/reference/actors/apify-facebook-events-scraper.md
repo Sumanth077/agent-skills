@@ -223,3 +223,18 @@ Higher subscription tiers receive better per-event pricing.
 - [Facebook Posts Scraper](https://apify.com/apify/facebook-posts-scraper) - Scrape posts from profiles and pages
 - [Facebook Comments Scraper](https://apify.com/apify/facebook-comments-scraper) - Extract comment discussions
 - [Facebook Reviews Scraper](https://apify.com/apify/facebook-reviews-scraper) - Gather business reviews
+
+## Essential Fields
+
+For quick answers and basic data exports, these fields are most relevant (in priority order):
+
+| Priority | Field | Description |
+|----------|-------|-------------|
+| 1 | `name` | Event name |
+| 2 | `url` | Event URL |
+| 3 | `dateTimeSentence` | Date/time |
+| 4 | `location.name` | Venue name |
+| 5 | `location.contextualName` | Location |
+| 6 | `usersGoing` | Attendees |
+| 7 | `usersInterested` | Interested |
+| 8 | `organizedBy` | Organizer |
