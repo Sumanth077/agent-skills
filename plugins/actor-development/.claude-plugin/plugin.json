@@ -1,0 +1,13 @@
+{
+  "name": "actor-development",
+  "description": "Develop, debug, and deploy Apify Actors - serverless cloud programs for web scraping, automation, and data processing",
+  "version": "1.0.0",
+  "author": {
+    "name": "Apify",
+    "email": "support@apify.com"
+  },
+  "homepage": "https://apify.com",
+  "repository": "https://github.com/apify/claude-code-plugins",
+  "license": "Apache-2.0",
+  "keywords": ["apify", "actor", "web-scraping", "automation", "crawlee", "playwright", "cheerio", "serverless"]
+}
