@@ -34,6 +34,7 @@ OUTPUT_PATH = ROOT / "agents" / "AGENTS.md"
 MARKETPLACE_PATH = ROOT / ".claude-plugin" / "marketplace.json"
 PLUGIN_PATH = ROOT / ".claude-plugin" / "plugin.json"
 README_PATH = ROOT / "README.md"
+SKILLS_DIR = ROOT / "skills"
 
 # Markers for the auto-generated skills table in README
 README_TABLE_START = "<!-- BEGIN_SKILLS_TABLE -->"
@@ -249,6 +250,31 @@ def bump_version(version: str, bump_type: str) -> str:
     return version
 
 
+def update_user_agent_in_skill(skill_name: str, new_version: str) -> bool:
+    """
+    Update USER_AGENT version in skill's run_actor.py script.
+    Returns True if updated, False otherwise.
+    """
+    script_path = SKILLS_DIR / skill_name / "reference" / "scripts" / "run_actor.py"
+    if not script_path.exists():
+        return False
+
+    content = script_path.read_text(encoding="utf-8")
+
+    # Pattern: USER_AGENT = "apify-agent-skills/skill-name-X.Y.Z"
+    pattern = rf'(USER_AGENT\s*=\s*"apify-agent-skills/{re.escape(skill_name)}-)\d+\.\d+\.\d+"'
+    replacement = rf'\g<1>{new_version}"'
+
+    new_content, count = re.subn(pattern, replacement, content)
+
+    if count > 0:
+        script_path.write_text(new_content, encoding="utf-8")
+        print(f"Updated USER_AGENT in {script_path.relative_to(ROOT)}: {new_version}")
+        return True
+
+    return False
+
+
 def get_changed_skills() -> set[str]:
     """Get list of skill names that have staged changes."""
     try:
@@ -298,6 +324,8 @@ def update_versions(commit_msg: str) -> bool:
                 plugin["version"] = new_version
                 print(f"Bumped {skill_name}: {old_version} → {new_version} ({bump_type})")
                 bumped = True
+                # Also update USER_AGENT in skill's run_actor.py
+                update_user_agent_in_skill(skill_name, new_version)
 
     # Bump marketplace version if any skill changed
     if changed_skills or bumped:
