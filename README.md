@@ -7,7 +7,7 @@ Official Apify agent skills for web scraping, data extraction, and automation. W
 <!-- BEGIN_SKILLS_TABLE -->
 | Name | Description | Documentation |
 |------|-------------|---------------|
-| `generating-leads` | Generate B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search using Apify Actors | [SKILL.md](skills/generating-leads/SKILL.md) |
+| `lead-generation` | Generate B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search using Apify Actors | [SKILL.md](skills/lead-generation/SKILL.md) |
 <!-- END_SKILLS_TABLE -->
 
 ## Installation
@@ -19,7 +19,7 @@ Official Apify agent skills for web scraping, data extraction, and automation. W
 /plugin marketplace add https://github.com/apify/agent-skills
 
 # Install a skill
-/plugin install generating-leads@apify-agent-skills
+/plugin install lead-generation@apify-agent-skills
 ```
 
 ### Cursor / Windsurf

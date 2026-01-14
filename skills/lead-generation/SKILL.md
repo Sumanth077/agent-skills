@@ -1,9 +1,9 @@
 ---
-name: generating-leads
+name: lead-generation
 description: Generates B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search. Use when user asks to find leads, prospects, businesses, build lead lists, enrich contacts, or scrape profiles for sales outreach.
 ---
 
-# Generating Leads
+# Lead Generation
 
 Scrape leads from multiple platforms using Apify Actors.
 
@@ -71,7 +71,7 @@ Before running, ask:
 **Quick answer (display in chat, no file):**
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "ACTOR_ID" \
   --input 'JSON_INPUT'
 ```
@@ -79,7 +79,7 @@ uv run --with python-dotenv --with requests \
 **CSV (all data):**
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "ACTOR_ID" \
   --input 'JSON_INPUT' \
   --output OUTPUT_FILE.csv \
@@ -89,7 +89,7 @@ uv run --with python-dotenv --with requests \
 **CSV (basic fields):**
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "ACTOR_ID" \
   --input 'JSON_INPUT' \
   --output OUTPUT_FILE.csv \
@@ -100,7 +100,7 @@ uv run --with python-dotenv --with requests \
 **JSON (all data):**
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "ACTOR_ID" \
   --input 'JSON_INPUT' \
   --output OUTPUT_FILE.json \
@@ -126,7 +126,7 @@ After completion, report:
 **Quick answer - display top 5 in chat:**
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA", "maxCrawledPlacesPerSearch": 50}'
 ```
@@ -134,7 +134,7 @@ uv run --with python-dotenv --with requests \
 **Google Maps - CSV with basic fields:**
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA", "maxCrawledPlacesPerSearch": 50}' \
   --output coffee-shops-seattle.csv \
@@ -145,7 +145,7 @@ uv run --with python-dotenv --with requests \
 **Contact enrichment - full JSON export:**
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "vdrmota/contact-info-scraper" \
   --input '{"startUrls": [{"url": "https://example.com"}], "maxRequestsPerStartUrl": 20}' \
   --output contacts.json \

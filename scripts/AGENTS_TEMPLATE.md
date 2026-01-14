@@ -17,6 +17,6 @@ IMPORTANT: You MUST read the SKILL.md file whenever the description of the skill
 {{/skills}}
 </available_skills>
 
-Paths referenced within SKILL folders are relative to that SKILL. For example the generating-leads `reference/workflows.md` would be referenced as `skills/generating-leads/reference/workflows.md`.
+Paths referenced within SKILL.md files are relative to that SKILL folder. For example `reference/workflows.md` refers to the workflows file inside the skill's reference folder.
 
 </skills>

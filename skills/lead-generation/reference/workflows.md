@@ -62,7 +62,7 @@ Task Progress:
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "streamers/youtube-scraper" \
   --input '{"searchKeywords": ["Claude Code"], "maxResults": 50}' \
   --output claude-code-videos.json \
@@ -74,7 +74,7 @@ uv run --with python-dotenv --with requests \
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "streamers/youtube-scraper" \
   --input '{"startUrls": [{"url": "https://www.youtube.com/@channel1"}, {"url": "https://www.youtube.com/@channel2"}], "maxResults": 1}' \
   --output youtube-creators.csv \
