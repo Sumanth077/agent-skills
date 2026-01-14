@@ -1,22 +1,36 @@
 {
-  "name": "apify",
+  "name": "apify-agent-skills",
   "owner": {
     "name": "Apify",
     "email": "support@apify.com"
   },
   "metadata": {
-    "description": "Official Apify marketplace for Claude Code plugins for web scraping, data extraction, and automation",
-    "version": "1.0.3",
-    "pluginRoot": "./plugins"
+    "description": "Official Apify agent skills for web scraping, data extraction, and automation",
+    "version": "1.1.0"
   },
   "plugins": [
     {
-      "name": "lead-generation",
-      "source": "./plugins/lead-generation",
+      "name": "generating-leads",
+      "source": "./skills/generating-leads",
+      "skills": "./",
       "description": "Generate B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search using Apify Actors",
-      "version": "2.0.15",
-      "keywords": ["leads", "sales", "prospecting", "b2b", "b2c", "scraping", "apify", "google-maps", "instagram", "tiktok", "facebook", "linkedin", "youtube"],
-      "category": "data-extraction"
+      "keywords": [
+        "leads",
+        "sales",
+        "prospecting",
+        "b2b",
+        "b2c",
+        "scraping",
+        "apify",
+        "google-maps",
+        "instagram",
+        "tiktok",
+        "facebook",
+        "linkedin",
+        "youtube"
+      ],
+      "category": "data-extraction",
+      "version": "1.1.0"
     }
   ]
 }

@@ -1,24 +1,45 @@
-# Apify Claude Code plugin marketplace
+# Apify Agent Skills
 
-Official Apify plugin marketplace for Claude Code - enabling web scraping, data extraction, and automation directly from Claude's CLI.
+Official Apify agent skills for web scraping, data extraction, and automation. Works with Claude Code, Cursor, Codex, Gemini CLI, and other AI coding assistants.
+
+## Available Skills
+
+<!-- BEGIN_SKILLS_TABLE -->
+| Name | Description | Documentation |
+|------|-------------|---------------|
+| `generating-leads` | Generate B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search using Apify Actors | [SKILL.md](skills/generating-leads/SKILL.md) |
+<!-- END_SKILLS_TABLE -->
 
 ## Installation
 
-### Add the marketplace
+### Claude Code
 
 ```bash
-/plugin marketplace add https://github.com/apify/claude-code-plugins
+# Add the marketplace
+/plugin marketplace add https://github.com/apify/agent-skills
+
+# Install a skill
+/plugin install generating-leads@apify-agent-skills
 ```
 
-### Install a plugin
+### Cursor / Windsurf
+
+Add to your project's `.cursor/settings.json` or use the same Claude Code plugin format.
+
+### Codex / Gemini CLI
+
+Point your agent to the `agents/AGENTS.md` file which contains skill descriptions and paths:
 
 ```bash
-/plugin install lead-generation@apify
+# Gemini CLI uses gemini-extension.json automatically
+# For Codex, reference agents/AGENTS.md in your configuration
 ```
 
-### Verify installation
+### Other AI Tools
 
-Run `/skills` to check if the plugin was installed successfully. If you don't see the skill listed, try restarting Claude Code.
+Any AI tool that supports markdown context can use the skills by pointing to:
+- `agents/AGENTS.md` - Auto-generated skill index
+- `skills/*/SKILL.md` - Individual skill documentation
 
 ## Prerequisites
 
@@ -28,22 +49,6 @@ Run `/skills` to check if the plugin was installed successfully. If you don't se
    ```
    APIFY_TOKEN=your_token_here
    ```
-
-## Available plugins
-
-### lead-generation
-
-Generate and enrich B2B/B2C leads using Apify scrapers across Google Maps, social media, and websites.
-
-#### Skills
-
-The `lead-generation` skill allows Claude to automatically invoke lead generation when you ask for prospects, leads, or business contacts.
-
-**Example prompts:**
-- "Find me coffee shops in Seattle"
-- "Get contact info from these websites"
-- "Build a lead list for fitness influencers"
-
 
 ## Supported Apify Actors
 
@@ -68,7 +73,7 @@ The `lead-generation` skill allows Claude to automatically invoke lead generatio
 | **YouTube** | YouTube Scraper | Creator partnerships |
 | **Websites** | Contact Info Scraper | Emails & socials from URLs |
 
-## Output format
+## Output Format
 
 All commands export data to CSV format for easy import into CRMs, spreadsheets, or other tools.
 
@@ -76,7 +81,29 @@ All commands export data to CSV format for easy import into CRMs, spreadsheets, 
 
 Apify Actors use pay-per-result pricing. Check individual Actor pricing on [apify.com](https://apify.com).
 
-## Future plugins
+## Contributing
+
+1. Fork this repository
+2. Create your skill in `skills/your-skill-name/`
+3. Add `SKILL.md` with proper frontmatter:
+   ```yaml
+   ---
+   name: your-skill-name
+   description: What your skill does and when to use it
+   ---
+   ```
+4. Add entry to `.claude-plugin/marketplace.json`
+5. Run `uv run scripts/generate_agents.py` to update AGENTS.md
+6. Submit a pull request
+
+## Development
+
+```bash
+# Regenerate AGENTS.md and validate marketplace.json
+uv run scripts/generate_agents.py
+```
+
+## Future Skills
 
 ### Outcome-based
 - `brand-monitoring` - Review tracking, sentiment analysis
@@ -90,14 +117,6 @@ Apify Actors use pay-per-result pricing. Check individual Actor pricing on [apif
 - `facebook-intelligence` - Pages, Posts, Groups, Ads
 - `tiktok-intelligence` - Profiles, Videos, Hashtags, Sounds
 - `youtube-intelligence` - Channels, Videos, Shorts, Comments
-
-## Contributing
-
-1. Fork this repository
-2. Create your plugin in `plugins/your-plugin-name/`
-3. Add entry to `.claude-plugin/marketplace.json`
-4. Submit a pull request
-
 
 ## Support
 

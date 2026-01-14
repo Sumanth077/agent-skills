@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "(?i)(commit|/commit)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run scripts/generate_agents.py && git add agents/AGENTS.md README.md .claude-plugin/marketplace.json .claude-plugin/plugin.json"
+          }
+        ]
+      }
+    ]
+  }
+}
