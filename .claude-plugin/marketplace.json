@@ -10,8 +10,8 @@
   },
   "plugins": [
     {
-      "name": "lead-generation",
-      "source": "./skills/lead-generation",
+      "name": "apify-lead-generation",
+      "source": "./skills/apify-lead-generation",
       "skills": "./",
       "description": "Generate B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search using Apify Actors",
       "keywords": [

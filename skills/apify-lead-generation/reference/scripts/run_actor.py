@@ -27,7 +27,7 @@ from dotenv import load_dotenv, find_dotenv
 import requests
 
 # User-Agent for tracking skill usage in Apify analytics
-USER_AGENT = "apify-agent-skills/lead-generation-1.1.1"
+USER_AGENT = "apify-agent-skills/apify-lead-generation-1.1.1"
 
 # Essential fields per actor for basic output mode
 ESSENTIAL_FIELDS = {
