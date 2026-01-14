@@ -50,32 +50,11 @@ Any AI tool that supports markdown context can use the skills by pointing to:
    APIFY_TOKEN=your_token_here
    ```
 
-## Supported Apify Actors
+## Output Formats
 
-| Platform | Actor | Use Case |
-|----------|-------|----------|
-| **Google** | Google Maps Scraper | Find local businesses |
-| | Google Maps Email Extractor | Direct email extraction |
-| | Google Search Scraper | Broad lead discovery |
-| **Instagram** | Instagram Profile Scraper | Influencer discovery |
-| | Instagram Scraper | Posts, comments, hashtags |
-| | Instagram Search Scraper | Places, users, hashtags |
-| | Instagram Tagged Scraper | Mentions tracking |
-| **TikTok** | TikTok Scraper | Videos, hashtags, profiles |
-| | Free TikTok Scraper | Free alternative |
-| | TikTok Profile Scraper | Creator metrics |
-| | TikTok User Search | Find users by keywords |
-| | TikTok Followers Scraper | Audience analysis |
-| **Facebook** | Facebook Pages Scraper | Business page data |
-| | Facebook Page Contacts | Contact extraction |
-| | Facebook Groups Scraper | Community prospecting |
-| | Facebook Events Scraper | Event networking |
-| **YouTube** | YouTube Scraper | Creator partnerships |
-| **Websites** | Contact Info Scraper | Emails & socials from URLs |
-
-## Output Format
-
-All commands export data to CSV format for easy import into CRMs, spreadsheets, or other tools.
+- **Quick Answer** - Top 5 results displayed in chat (default, no file saved)
+- **CSV** - Full export or basic fields only
+- **JSON** - Full data export
 
 ## Pricing
 

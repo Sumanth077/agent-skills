@@ -26,6 +26,8 @@ from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
 import requests
 
+# User-Agent for tracking skill usage in Apify analytics
+USER_AGENT = "apify-agent-skills/lead-generation-1.1.1"
 
 # Essential fields per actor for basic output mode
 ESSENTIAL_FIELDS = {
@@ -165,7 +167,7 @@ def start_actor(token: str, actor_id: str, input_json: str) -> tuple[str, str]:
     # Convert "author/actor" format to "author~actor" for API compatibility
     actor_id = actor_id.replace("/", "~")
     url = f"https://api.apify.com/v2/acts/{actor_id}/runs"
-    headers = {"Content-Type": "application/json"}
+    headers = {"Content-Type": "application/json", "User-Agent": f"{USER_AGENT}/start_actor"}
     params = {"token": token}
 
     try:
@@ -250,9 +252,10 @@ def download_results(
 ) -> None:
     """Download dataset items in specified format."""
     url = f"https://api.apify.com/v2/datasets/{dataset_id}/items"
+    headers = {"User-Agent": f"{USER_AGENT}/download_{format}"}
     params = {"token": token, "format": "json"}  # Always fetch as JSON first for filtering
 
-    response = requests.get(url, params=params)
+    response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
 
     data = response.json()
@@ -295,9 +298,10 @@ def download_results(
 def display_quick_answer(token: str, dataset_id: str, actor_id: str) -> None:
     """Display top 5 results in chat format."""
     url = f"https://api.apify.com/v2/datasets/{dataset_id}/items"
+    headers = {"User-Agent": f"{USER_AGENT}/quick_answer"}
     params = {"token": token, "format": "json"}
 
-    response = requests.get(url, params=params)
+    response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
 
     data = response.json()
