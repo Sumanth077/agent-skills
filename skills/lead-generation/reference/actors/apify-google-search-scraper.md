@@ -60,7 +60,7 @@ Search Google to find companies, people, or content for lead generation.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "SaaS companies in Austin",
@@ -92,7 +92,7 @@ Extract paid search results (ads) to analyze competitor advertising strategies.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "CRM software",
@@ -129,7 +129,7 @@ Find companies and extract decision-maker contacts (names, titles, emails, Linke
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "AI startups in San Francisco",
@@ -174,7 +174,7 @@ Track Google AI Overviews for Answer Engine Optimization (AEO) and brand visibil
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "best CRM software 2024",
@@ -220,7 +220,7 @@ Use Perplexity AI to get synthesized answers across multiple platforms.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "latest trends in B2B SaaS",
@@ -267,7 +267,7 @@ Find recently published content using date filters.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "artificial intelligence breakthrough",
@@ -297,7 +297,7 @@ Search within specific websites or domains.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "Apify site:twitter.com",

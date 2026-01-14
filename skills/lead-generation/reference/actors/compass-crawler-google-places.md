@@ -59,7 +59,7 @@ Find local businesses with essential contact information.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA", "maxCrawledPlacesPerSearch": 100, "language": "en"}' \
   --output coffee-shops-seattle.csv \
@@ -86,7 +86,7 @@ Add email addresses and social media profiles scraped from business websites.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
@@ -121,7 +121,7 @@ Get detailed information including opening hours, popular times, and review dist
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
@@ -155,7 +155,7 @@ Extract customer reviews for sentiment analysis or competitor research.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
@@ -195,7 +195,7 @@ Use filters to find only businesses matching specific criteria.
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
@@ -233,7 +233,7 @@ Extract decision-maker contacts (names, titles, emails, LinkedIn profiles) from 
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["restaurants"],
@@ -277,7 +277,7 @@ Get detailed social media analytics (follower counts, verification status, descr
 
 ```bash
 uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/skills/generating-leads/reference/scripts/run_actor.py \
+  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
