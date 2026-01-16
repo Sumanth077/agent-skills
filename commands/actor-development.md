@@ -62,9 +62,9 @@ Initial request: $ARGUMENTS
 
 **Actions**:
 1. **Ask user which language they prefer:**
-   - JavaScript (references/actor-template-js.md)
-   - TypeScript (references/actor-template-ts.md)
-   - Python (references/actor-template-python.md)
+   - JavaScript (skills/apify-actor-development/references/actor-template-js.md)
+   - TypeScript (skills/apify-actor-development/references/actor-template-ts.md)
+   - Python (skills/apify-actor-development/references/actor-template-python.md)
 2. Note: Additional packages (Crawlee, Playwright, etc.) can be installed later as needed
 
 ---
@@ -99,7 +99,7 @@ Initial request: $ARGUMENTS
 
 **Actions**:
 1. Wait for explicit user approval
-2. Copy appropriate language template from `references/` directory
+2. Copy appropriate language template from `skills/apify-actor-development/references/` directory
 3. Update `.actor/actor.json`:
    - Set actor name and version
    - **IMPORTANT**: Fill in `generatedBy` property with current model name
@@ -112,11 +112,11 @@ Initial request: $ARGUMENTS
 8. Update todos as you progress
 
 **Reference documentation:**
-- [references/actor-json.md](references/actor-json.md)
-- [references/input-schema.md](references/input-schema.md)
-- [references/output-schema.md](references/output-schema.md)
-- [references/dataset-schema.md](references/dataset-schema.md)
-- [references/key-value-store-schema.md](references/key-value-store-schema.md)
+- [skills/apify-actor-development/references/actor-json.md](skills/apify-actor-development/references/actor-json.md)
+- [skills/apify-actor-development/references/input-schema.md](skills/apify-actor-development/references/input-schema.md)
+- [skills/apify-actor-development/references/output-schema.md](skills/apify-actor-development/references/output-schema.md)
+- [skills/apify-actor-development/references/dataset-schema.md](skills/apify-actor-development/references/dataset-schema.md)
+- [skills/apify-actor-development/references/key-value-store-schema.md](skills/apify-actor-development/references/key-value-store-schema.md)
 
 ---
 
@@ -141,8 +141,8 @@ Initial request: $ARGUMENTS
    - ✗ Don't hard code values that should be in input schema
    - ✗ Don't skip input validation or error handling
    - ✗ Don't overload servers - use appropriate concurrency and delays
-3. Implement standby mode readiness probe if `usesStandbyMode: true` (see [references/standby-mode.md](references/standby-mode.md))
-4. Use proper logging (see [references/logging.md](references/logging.md))
+3. Implement standby mode readiness probe if `usesStandbyMode: true` (see [skills/apify-actor-development/references/standby-mode.md](skills/apify-actor-development/references/standby-mode.md))
+4. Use proper logging (see [skills/apify-actor-development/references/logging.md](skills/apify-actor-development/references/logging.md))
 5. Update todos as you progress
 
 ---
