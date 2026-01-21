@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Official Apify agent skills for web scraping, data extraction, and automation",
-    "version": "1.1.1"
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -54,6 +54,28 @@
       ],
       "category": "data-extraction",
       "version": "1.0.0"
+    },
+    {
+      "name": "apify-competitor-intelligence",
+      "source": "./skills/apify-competitor-intelligence",
+      "skills": "./",
+      "description": "Analyze competitor strategies, content, pricing, ads, and market positioning across Google Maps, Booking.com, Facebook, Instagram, YouTube, and TikTok",
+      "keywords": [
+        "competitor",
+        "intelligence",
+        "analysis",
+        "benchmarking",
+        "strategy",
+        "ads",
+        "google-maps",
+        "booking",
+        "facebook",
+        "instagram",
+        "youtube",
+        "tiktok"
+      ],
+      "category": "data-extraction",
+      "version": "1.1.0"
     }
   ]
 }

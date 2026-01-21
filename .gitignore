@@ -6,5 +6,6 @@
 context/
 CLAUDE.md
 PLAN.md
+PLAN-*.md
 .mcp.json
 
