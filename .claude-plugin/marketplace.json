@@ -98,6 +98,26 @@
       ],
       "category": "data-extraction",
       "version": "1.0.0"
+    },
+    {
+      "name": "apify-influencer-discovery",
+      "source": "./skills/apify-influencer-discovery",
+      "skills": "./",
+      "description": "Find and evaluate influencers for brand partnerships, verify authenticity, and track collaboration performance across Instagram, Facebook, YouTube, and TikTok",
+      "keywords": [
+        "influencer",
+        "discovery",
+        "partnership",
+        "creator",
+        "collaboration",
+        "authenticity",
+        "instagram",
+        "facebook",
+        "youtube",
+        "tiktok"
+      ],
+      "category": "data-extraction",
+      "version": "1.0.0"
     }
   ]
 }
