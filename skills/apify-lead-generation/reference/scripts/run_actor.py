@@ -9,11 +9,14 @@ Usage:
     # Quick answer (display in chat, no file saved)
     uv run scripts/run_actor.py --actor ACTOR_ID --input '{}'
 
+    # Quick answer with essential fields filter
+    uv run scripts/run_actor.py --actor ACTOR_ID --input '{}' --essential-fields 'title,url,phone'
+
     # Export to file
     uv run scripts/run_actor.py --actor ACTOR_ID --input '{}' --output leads.csv --format csv
 
-    # Export basic fields only
-    uv run scripts/run_actor.py --actor ACTOR_ID --input '{}' --output leads.csv --format csv --fields basic
+    # Export basic fields only (requires --essential-fields)
+    uv run scripts/run_actor.py --actor ACTOR_ID --input '{}' --output leads.csv --format csv --fields basic --essential-fields 'title,url,phone'
 """
 
 import argparse
@@ -27,29 +30,8 @@ from dotenv import load_dotenv, find_dotenv
 import requests
 
 # User-Agent for tracking skill usage in Apify analytics
-USER_AGENT = "apify-agent-skills/apify-lead-generation-1.1.1"
+USER_AGENT = "apify-agent-skills/apify-lead-generation-1.1.2"
 
-# Essential fields per actor for basic output mode
-ESSENTIAL_FIELDS = {
-    "compass~crawler-google-places": ["title", "url", "address", "phone", "website", "totalScore", "reviewsCount", "categoryName"],
-    "poidata~google-maps-email-extractor": ["name", "url", "address", "phone", "emails", "website", "rating", "social"],
-    "apify~instagram-scraper": ["url", "ownerUsername", "caption", "likesCount", "commentsCount", "timestamp"],
-    "apify~instagram-profile-scraper": ["username", "url", "fullName", "followersCount", "postsCount", "biography", "externalUrl", "verified"],
-    "apify~instagram-search-scraper": ["username", "url", "fullName", "followersCount", "biography", "externalUrl", "verified", "name", "inputUrl", "category", "phone", "location_address", "location_city", "media_count"],
-    "apify~instagram-tagged-scraper": ["url", "caption", "timestamp", "commentsCount", "hashtags"],
-    "clockworks~tiktok-scraper": ["webVideoUrl", "authorMeta.name", "authorMeta.nickName", "text", "playCount", "diggCount", "commentCount", "authorMeta.fans"],
-    "clockworks~free-tiktok-scraper": ["webVideoUrl", "authorMeta.name", "authorMeta.nickName", "text", "playCount", "diggCount", "authorMeta.fans"],
-    "clockworks~tiktok-profile-scraper": ["webVideoUrl", "authorMeta.name", "authorMeta.nickName", "authorMeta.fans", "authorMeta.bioLink", "playCount", "diggCount"],
-    "clockworks~tiktok-followers-scraper": ["authorMeta.name", "authorMeta.profileUrl", "authorMeta.nickName", "authorMeta.fans", "authorMeta.verified", "authorMeta.bioLink", "connectionType"],
-    "clockworks~tiktok-user-search-scraper": ["name", "nickName", "fans", "video", "verified", "signature", "bioLink"],
-    "apify~facebook-pages-scraper": ["title", "pageUrl", "email", "phone", "website", "address", "likes", "followers"],
-    "apify~facebook-page-contact-information": ["pageName", "pageUrl", "email", "phone", "website", "address", "city", "category"],
-    "apify~facebook-groups-scraper": ["url", "user.name", "text", "time", "likesCount", "commentsCount", "groupTitle"],
-    "apify~facebook-events-scraper": ["name", "url", "dateTimeSentence", "location.name", "location.contextualName", "usersGoing", "usersInterested", "organizedBy"],
-    "vdrmota~contact-info-scraper": ["domain", "emails", "phones", "linkedIns", "facebooks", "instagrams", "twitters"],
-    "apify~google-search-scraper": ["title", "url", "description", "rank"],
-    "streamers~youtube-scraper": ["title", "url", "channelName", "channelUrl", "viewCount", "likes", "numberOfSubscribers"],
-}
 
 
 def main():
@@ -66,6 +48,20 @@ def main():
         sys.exit(1)
 
     args = parse_args()
+
+    # Validate essential-fields requirement early (before starting the actor run)
+    if args.fields == "basic" and not args.essential_fields:
+        print("Error: --essential-fields is required when using --fields basic", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("Example: --essential-fields 'title,url,phone,address'", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("Use mcpc fetch-actor-details to discover available output fields.", file=sys.stderr)
+        sys.exit(1)
+
+    # Parse essential fields
+    essential_fields = None
+    if args.essential_fields:
+        essential_fields = [f.strip() for f in args.essential_fields.split(",")]
 
     # Start the actor run
     print(f"Starting actor: {args.actor}")
@@ -84,11 +80,11 @@ def main():
     # Determine output mode
     if args.output:
         # File output mode
-        download_results(token, dataset_id, args.output, args.format, args.fields, args.actor)
+        download_results(token, dataset_id, args.output, args.format, args.fields, essential_fields)
         report_summary(args.output, args.format)
     else:
         # Quick answer mode - display in chat
-        display_quick_answer(token, dataset_id, args.actor)
+        display_quick_answer(token, dataset_id, essential_fields)
 
 
 def parse_args():
@@ -99,7 +95,7 @@ def parse_args():
 Output Formats:
   JSON (all data)     --output file.json --format json
   CSV (all data)      --output file.csv --format csv
-  CSV (basic fields)  --output file.csv --format csv --fields basic
+  CSV (basic fields)  --output file.csv --format csv --fields basic --essential-fields 'title,url,...'
   Quick answer        (no --output) - displays top 5 in chat
 
 Examples:
@@ -108,17 +104,24 @@ Examples:
     --actor "compass/crawler-google-places" \\
     --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}'
 
+  # Quick answer with essential fields filter
+  uv run scripts/run_actor.py \\
+    --actor "compass/crawler-google-places" \\
+    --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}' \\
+    --essential-fields 'title,address,phone,website,totalScore'
+
   # Export all data to CSV
   uv run scripts/run_actor.py \\
     --actor "compass/crawler-google-places" \\
     --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}' \\
     --output leads.csv --format csv
 
-  # Export basic fields only
+  # Export basic fields only (requires --essential-fields)
   uv run scripts/run_actor.py \\
     --actor "compass/crawler-google-places" \\
     --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}' \\
-    --output leads.csv --format csv --fields basic
+    --output leads.csv --format csv --fields basic \\
+    --essential-fields 'title,address,phone,website,totalScore'
         """,
     )
     parser.add_argument(
@@ -158,6 +161,11 @@ Examples:
         type=int,
         default=5,
         help="Seconds between status checks (default: 5)",
+    )
+    parser.add_argument(
+        "--essential-fields",
+        type=str,
+        help="Comma-separated essential fields for basic output (e.g., 'title,url,phone'). Required when --fields basic is used.",
     )
     return parser.parse_args()
 
@@ -248,7 +256,7 @@ def filter_fields(items: list, fields: list) -> list:
 
 
 def download_results(
-    token: str, dataset_id: str, output_path: str, format: str, fields: str, actor_id: str
+    token: str, dataset_id: str, output_path: str, format: str, fields: str, essential_fields: list | None
 ) -> None:
     """Download dataset items in specified format."""
     url = f"https://api.apify.com/v2/datasets/{dataset_id}/items"
@@ -261,11 +269,8 @@ def download_results(
     data = response.json()
 
     # Filter fields if basic mode
-    if fields == "basic":
-        actor_key = actor_id.replace("/", "~")
-        essential = ESSENTIAL_FIELDS.get(actor_key, [])
-        if essential:
-            data = filter_fields(data, essential)
+    if fields == "basic" and essential_fields:
+        data = filter_fields(data, essential_fields)
 
     # Write output
     if format == "json":
@@ -295,7 +300,7 @@ def download_results(
     print(f"Saved to: {output_path}")
 
 
-def display_quick_answer(token: str, dataset_id: str, actor_id: str) -> None:
+def display_quick_answer(token: str, dataset_id: str, essential_fields: list | None) -> None:
     """Display top 5 results in chat format."""
     url = f"https://api.apify.com/v2/datasets/{dataset_id}/items"
     headers = {"User-Agent": f"{USER_AGENT}/quick_answer"}
@@ -311,13 +316,9 @@ def display_quick_answer(token: str, dataset_id: str, actor_id: str) -> None:
         print("\nNo results found.")
         return
 
-    # Get essential fields for this actor
-    actor_key = actor_id.replace("/", "~")
-    essential = ESSENTIAL_FIELDS.get(actor_key, [])
-
-    # Filter to essential fields
-    if essential:
-        data = filter_fields(data, essential)
+    # Filter to essential fields if provided
+    if essential_fields:
+        data = filter_fields(data, essential_fields)
 
     # Display top 5
     print(f"\n{'='*60}")
