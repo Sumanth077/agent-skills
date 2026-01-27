@@ -58,8 +58,7 @@ Find local businesses with essential contact information.
 **Example: Find coffee shops in Seattle**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "compass/crawler-google-places" \
   --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA", "maxCrawledPlacesPerSearch": 100, "language": "en"}' \
   --output coffee-shops-seattle.csv \
@@ -85,8 +84,7 @@ Add email addresses and social media profiles scraped from business websites.
 **Example: Coffee shops with contact enrichment**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
@@ -120,8 +118,7 @@ Get detailed information including opening hours, popular times, and review dist
 **Example: Coffee shops with place details**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
@@ -154,8 +151,7 @@ Extract customer reviews for sentiment analysis or competitor research.
 **Example: Get recent reviews for top coffee shops**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
@@ -194,8 +190,7 @@ Use filters to find only businesses matching specific criteria.
 **Example: Find only highly-rated coffee shops with websites**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],
@@ -232,8 +227,7 @@ Extract decision-maker contacts (names, titles, emails, LinkedIn profiles) from 
 **Example: Find restaurant owners/managers**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["restaurants"],
@@ -276,8 +270,7 @@ Get detailed social media analytics (follower counts, verification status, descr
 **Example: Coffee shops with Instagram analytics**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "compass/crawler-google-places" \
   --input '{
     "searchStringsArray": ["coffee shops"],

@@ -11,7 +11,7 @@ Scrape leads from multiple platforms using Apify Actors.
 (No need to check it upfront)
 
 - `.env` file with `APIFY_TOKEN`
-- Python 3.9+ and `uv`
+- Node.js 20.6+ (for native `--env-file` support)
 - `mcpc` CLI tool (for fetching Actor schemas)
 
 ## Workflow
@@ -79,29 +79,26 @@ Before running, ask:
 
 **Quick answer (display in chat, no file):**
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "ACTOR_ID" \
   --input 'JSON_INPUT'
 ```
 
 **CSV:**
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "ACTOR_ID" \
   --input 'JSON_INPUT' \
-  --output OUTPUT_FILE.csv \
+  --output YYYY-MM-DD_OUTPUT_FILE.csv \
   --format csv
 ```
 
 **JSON:**
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "ACTOR_ID" \
   --input 'JSON_INPUT' \
-  --output OUTPUT_FILE.json \
+  --output YYYY-MM-DD_OUTPUT_FILE.json \
   --format json
 ```
 
@@ -117,6 +114,7 @@ After completion, report:
 ## Error Handling
 
 `APIFY_TOKEN not found` - Ask user to create `.env` with `APIFY_TOKEN=your_token`
+`mcpc not found` - Ask user to install `npm install -g @apify/mcpc`
 `Actor not found` - Check Actor ID spelling
 `Run FAILED` - Ask user to check Apify console link in error output
 `Timeout` - Reduce input size or increase `--timeout`

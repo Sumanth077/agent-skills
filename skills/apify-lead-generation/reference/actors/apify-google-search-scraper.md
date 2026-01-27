@@ -59,8 +59,7 @@ Search Google to find companies, people, or content for lead generation.
 **Example: Find SaaS companies in Austin**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "SaaS companies in Austin",
@@ -91,8 +90,7 @@ Extract paid search results (ads) to analyze competitor advertising strategies.
 **Example: Find companies advertising on "CRM software"**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "CRM software",
@@ -128,8 +126,7 @@ Find companies and extract decision-maker contacts (names, titles, emails, Linke
 **Example: Find tech companies and their C-suite contacts**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "AI startups in San Francisco",
@@ -173,8 +170,7 @@ Track Google AI Overviews for Answer Engine Optimization (AEO) and brand visibil
 **Example: Monitor AI overviews for brand queries**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "best CRM software 2024",
@@ -219,8 +215,7 @@ Use Perplexity AI to get synthesized answers across multiple platforms.
 **Example: Research a topic with Perplexity**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "latest trends in B2B SaaS",
@@ -266,8 +261,7 @@ Find recently published content using date filters.
 **Example: Find articles about AI published in the last week**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "artificial intelligence breakthrough",
@@ -296,8 +290,7 @@ Search within specific websites or domains.
 **Example: Find mentions of a company on Twitter**
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "apify/google-search-scraper" \
   --input '{
     "queries": "Apify site:twitter.com",

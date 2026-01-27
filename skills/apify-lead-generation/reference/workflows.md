@@ -61,8 +61,7 @@ Task Progress:
 2. Step 1 - Find videos about the topic:
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "streamers/youtube-scraper" \
   --input '{"searchKeywords": ["Claude Code"], "maxResults": 50}' \
   --output claude-code-videos.json \
@@ -73,8 +72,7 @@ uv run --with python-dotenv --with requests \
 4. Step 2 - Get detailed channel information:
 
 ```bash
-uv run --with python-dotenv --with requests \
-  ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.py \
+node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --actor "streamers/youtube-scraper" \
   --input '{"startUrls": [{"url": "https://www.youtube.com/@channel1"}, {"url": "https://www.youtube.com/@channel2"}], "maxResults": 1}' \
   --output youtube-creators.csv \
