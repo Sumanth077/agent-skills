@@ -1,11 +1,11 @@
 ---
-name: apify-lead-generation
-description: Generates B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search. Use when user asks to find leads, prospects, businesses, build lead lists, enrich contacts, or scrape profiles for sales outreach.
+name: apify-market-research
+description: Analyze market conditions, geographic opportunities, pricing, consumer behavior, and product validation across Google Maps, Facebook, Instagram, Booking.com, and TripAdvisor.
 ---
 
-# Lead Generation
+# Market Research
 
-Scrape leads from multiple platforms using Apify Actors.
+Conduct market research using Apify Actors to extract data from multiple platforms.
 
 ## Prerequisites
 (No need to check it upfront)
@@ -20,36 +20,35 @@ Copy this checklist and track progress:
 
 ```
 Task Progress:
-- [ ] Step 1: Determine lead source (select Actor)
+- [ ] Step 1: Identify market research type (select Actor)
 - [ ] Step 2: Fetch Actor schema via mcpc
 - [ ] Step 3: Ask user preferences (format, filename)
-- [ ] Step 4: Run the lead finder script
-- [ ] Step 5: Summarize results
+- [ ] Step 4: Run the analysis script
+- [ ] Step 5: Summarize findings
 ```
 
-### Step 1: Determine Lead Source
+### Step 1: Identify Market Research Type
 
-Select the appropriate Actor based on user needs:
+Select the appropriate Actor based on research needs:
 
 | User Need | Actor ID | Best For |
 |-----------|----------|----------|
-| Local businesses | `compass/crawler-google-places` | Restaurants, gyms, shops |
-| Contact enrichment | `vdrmota/contact-info-scraper` | Emails, phones from URLs |
-| Instagram profiles | `apify/instagram-profile-scraper` | Influencer discovery |
-| Instagram posts/comments | `apify/instagram-scraper` | Posts, comments, hashtags, places |
-| Instagram search | `apify/instagram-search-scraper` | Places, users, hashtags discovery |
-| TikTok videos/hashtags | `clockworks/tiktok-scraper` | Comprehensive TikTok data extraction |
-| TikTok hashtags/profiles | `clockworks/free-tiktok-scraper` | Free TikTok data extractor |
-| TikTok user search | `clockworks/tiktok-user-search-scraper` | Find users by keywords |
-| TikTok profiles | `clockworks/tiktok-profile-scraper` | Creator outreach |
-| TikTok followers/following | `clockworks/tiktok-followers-scraper` | Audience analysis, segmentation |
-| Facebook pages | `apify/facebook-pages-scraper` | Business contacts |
-| Facebook page contacts | `apify/facebook-page-contact-information` | Extract emails, phones, addresses |
-| Facebook groups | `apify/facebook-groups-scraper` | Buying intent signals |
-| Facebook events | `apify/facebook-events-scraper` | Event networking, partnerships |
-| Google Search | `apify/google-search-scraper` | Broad lead discovery |
-| YouTube channels | `streamers/youtube-scraper` | Creator partnerships |
-| Google Maps emails | `poidata/google-maps-email-extractor` | Direct email extraction |
+| Market density | `compass/crawler-google-places` | Location analysis |
+| Geospatial analysis | `compass/google-maps-extractor` | Business mapping |
+| Regional interest | `apify/google-trends-scraper` | Trend data |
+| Pricing and demand | `apify/facebook-marketplace-scraper` | Market pricing |
+| Event market | `apify/facebook-events-scraper` | Event analysis |
+| Consumer needs | `apify/facebook-groups-scraper` | Group research |
+| Market landscape | `apify/facebook-pages-scraper` | Business pages |
+| Business density | `apify/facebook-page-contact-information` | Contact data |
+| Cultural insights | `apify/facebook-photos-scraper` | Visual research |
+| Niche targeting | `apify/instagram-hashtag-scraper` | Hashtag research |
+| Hashtag stats | `apify/instagram-hashtag-stats` | Market sizing |
+| Market activity | `apify/instagram-reel-scraper` | Activity analysis |
+| Market intelligence | `apify/instagram-scraper` | Full data |
+| Product launch research | `apify/instagram-api-scraper` | API access |
+| Hospitality market | `voyager/booking-scraper` | Hotel data |
+| Tourism insights | `maxcopell/tripadvisor-reviews` | Review analysis |
 
 ### Step 2: Fetch Actor Schema
 
@@ -102,13 +101,13 @@ node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
   --format json
 ```
 
-### Step 5: Summarize Results
+### Step 5: Summarize Findings
 
 After completion, report:
-- Number of leads found
+- Number of results found
 - File location and name
-- Key fields available
-- Suggested next steps (filtering, enrichment)
+- Key market insights
+- Suggested next steps (deeper analysis, validation)
 
 
 ## Error Handling

@@ -1,11 +1,11 @@
 ---
-name: apify-lead-generation
-description: Generates B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search. Use when user asks to find leads, prospects, businesses, build lead lists, enrich contacts, or scrape profiles for sales outreach.
+name: apify-influencer-discovery
+description: Find and evaluate influencers for brand partnerships, verify authenticity, and track collaboration performance across Instagram, Facebook, YouTube, and TikTok.
 ---
 
-# Lead Generation
+# Influencer Discovery
 
-Scrape leads from multiple platforms using Apify Actors.
+Discover and analyze influencers across multiple platforms using Apify Actors.
 
 ## Prerequisites
 (No need to check it upfront)
@@ -20,36 +20,34 @@ Copy this checklist and track progress:
 
 ```
 Task Progress:
-- [ ] Step 1: Determine lead source (select Actor)
+- [ ] Step 1: Determine discovery source (select Actor)
 - [ ] Step 2: Fetch Actor schema via mcpc
 - [ ] Step 3: Ask user preferences (format, filename)
-- [ ] Step 4: Run the lead finder script
+- [ ] Step 4: Run the discovery script
 - [ ] Step 5: Summarize results
 ```
 
-### Step 1: Determine Lead Source
+### Step 1: Determine Discovery Source
 
 Select the appropriate Actor based on user needs:
 
 | User Need | Actor ID | Best For |
 |-----------|----------|----------|
-| Local businesses | `compass/crawler-google-places` | Restaurants, gyms, shops |
-| Contact enrichment | `vdrmota/contact-info-scraper` | Emails, phones from URLs |
-| Instagram profiles | `apify/instagram-profile-scraper` | Influencer discovery |
-| Instagram posts/comments | `apify/instagram-scraper` | Posts, comments, hashtags, places |
-| Instagram search | `apify/instagram-search-scraper` | Places, users, hashtags discovery |
-| TikTok videos/hashtags | `clockworks/tiktok-scraper` | Comprehensive TikTok data extraction |
-| TikTok hashtags/profiles | `clockworks/free-tiktok-scraper` | Free TikTok data extractor |
-| TikTok user search | `clockworks/tiktok-user-search-scraper` | Find users by keywords |
-| TikTok profiles | `clockworks/tiktok-profile-scraper` | Creator outreach |
-| TikTok followers/following | `clockworks/tiktok-followers-scraper` | Audience analysis, segmentation |
-| Facebook pages | `apify/facebook-pages-scraper` | Business contacts |
-| Facebook page contacts | `apify/facebook-page-contact-information` | Extract emails, phones, addresses |
-| Facebook groups | `apify/facebook-groups-scraper` | Buying intent signals |
-| Facebook events | `apify/facebook-events-scraper` | Event networking, partnerships |
-| Google Search | `apify/google-search-scraper` | Broad lead discovery |
-| YouTube channels | `streamers/youtube-scraper` | Creator partnerships |
-| Google Maps emails | `poidata/google-maps-email-extractor` | Direct email extraction |
+| Influencer profiles | `apify/instagram-profile-scraper` | Profile metrics, bio, follower counts |
+| Find by hashtag | `apify/instagram-hashtag-scraper` | Discover influencers using specific hashtags |
+| Reel engagement | `apify/instagram-reel-scraper` | Analyze reel performance and engagement |
+| Discovery by niche | `apify/instagram-search-scraper` | Search for influencers by keyword/niche |
+| Brand mentions | `apify/instagram-tagged-scraper` | Track who tags brands/products |
+| Comprehensive data | `apify/instagram-scraper` | Full profile, posts, comments analysis |
+| API-based discovery | `apify/instagram-api-scraper` | Fast API-based data extraction |
+| Engagement analysis | `apify/export-instagram-comments-posts` | Export comments for sentiment analysis |
+| Facebook content | `apify/facebook-posts-scraper` | Analyze Facebook post performance |
+| Micro-influencers | `apify/facebook-groups-scraper` | Find influencers in niche groups |
+| Influential pages | `apify/facebook-search-scraper` | Search for influential pages |
+| YouTube creators | `streamers/youtube-channel-scraper` | Channel metrics and subscriber data |
+| TikTok influencers | `clockworks/tiktok-scraper` | Comprehensive TikTok data extraction |
+| TikTok (free) | `clockworks/free-tiktok-scraper` | Free TikTok data extractor |
+| Live streamers | `clockworks/tiktok-live-scraper` | Discover live streaming influencers |
 
 ### Step 2: Fetch Actor Schema
 
@@ -59,7 +57,7 @@ Fetch the Actor's input schema and details dynamically using mcpc:
 export $(grep APIFY_TOKEN .env | xargs) && mcpc --json mcp.apify.com --header "Authorization: Bearer $APIFY_TOKEN" tools-call fetch-actor-details actor:="ACTOR_ID" | jq -r ".content"
 ```
 
-Replace `ACTOR_ID` with the selected Actor (e.g., `compass/crawler-google-places`).
+Replace `ACTOR_ID` with the selected Actor (e.g., `apify/instagram-profile-scraper`).
 
 This returns:
 - Actor description and README
@@ -105,10 +103,10 @@ node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
 ### Step 5: Summarize Results
 
 After completion, report:
-- Number of leads found
+- Number of influencers found
 - File location and name
-- Key fields available
-- Suggested next steps (filtering, enrichment)
+- Key metrics available (followers, engagement rate, etc.)
+- Suggested next steps (filtering, outreach, deeper analysis)
 
 
 ## Error Handling

@@ -8,7 +8,15 @@ Official Apify agent skills for web scraping, data extraction, and automation. W
 | Name | Description | Documentation |
 |------|-------------|---------------|
 | `apify-actor-development` | Develop, debug, and deploy Apify Actors - serverless cloud programs for web scraping, automation, and data processing | [SKILL.md](skills/apify-actor-development/SKILL.md) |
+| `apify-audience-analysis` | Understand audience demographics, preferences, behavior patterns, and engagement quality across Facebook, Instagram, YouTube, and TikTok | [SKILL.md](skills/apify-audience-analysis/SKILL.md) |
+| `apify-brand-reputation-monitoring` | Track reviews, ratings, sentiment, and brand mentions across Google Maps, Booking.com, TripAdvisor, Facebook, Instagram, YouTube, and TikTok | [SKILL.md](skills/apify-brand-reputation-monitoring/SKILL.md) |
+| `apify-competitor-intelligence` | Analyze competitor strategies, content, pricing, ads, and market positioning across Google Maps, Booking.com, Facebook, Instagram, YouTube, and TikTok | [SKILL.md](skills/apify-competitor-intelligence/SKILL.md) |
+| `apify-content-analytics` | Track engagement metrics, measure campaign ROI, and analyze content performance across Instagram, Facebook, YouTube, and TikTok | [SKILL.md](skills/apify-content-analytics/SKILL.md) |
+| `apify-influencer-discovery` | Find and evaluate influencers for brand partnerships, verify authenticity, and track collaboration performance across Instagram, Facebook, YouTube, and TikTok | [SKILL.md](skills/apify-influencer-discovery/SKILL.md) |
 | `apify-lead-generation` | Generate B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search using Apify Actors | [SKILL.md](skills/apify-lead-generation/SKILL.md) |
+| `apify-market-research` | Analyze market conditions, geographic opportunities, pricing, consumer behavior, and product validation across Google Maps, Facebook, Instagram, Booking.com, and TripAdvisor | [SKILL.md](skills/apify-market-research/SKILL.md) |
+| `apify-trend-analysis` | Discover and track emerging trends across Google Trends, Instagram, Facebook, YouTube, and TikTok to inform content strategy | [SKILL.md](skills/apify-trend-analysis/SKILL.md) |
+| `apify-ultimate-scraper` | Universal AI-powered web scraper for any platform. Scrape data from Instagram, Facebook, TikTok, YouTube, Google Maps, Google Search, Google Trends, Booking.com, and TripAdvisor for lead generation, brand monitoring, competitor analysis, influencer discovery, trend research, and more | [SKILL.md](skills/apify-ultimate-scraper/SKILL.md) |
 <!-- END_SKILLS_TABLE -->
 
 ## Installation
@@ -20,7 +28,7 @@ Official Apify agent skills for web scraping, data extraction, and automation. W
 /plugin marketplace add https://github.com/apify/agent-skills
 
 # Install a skill
-/plugin install apify-lead-generation@apify-agent-skills
+/plugin install apify-ultimate-scraper@apify-agent-skills
 ```
 
 ### Cursor / Windsurf
@@ -44,17 +52,15 @@ Any AI tool that supports markdown context can use the skills by pointing to:
 
 ## Prerequisites
 
-1. **Apify Account**: Sign up at [apify.com](https://apify.com)
-2. **API Token**: Get your token from [Apify Console > Integrations](https://console.apify.com/account/integrations)
-3. **Set Environment Variable**: Add to your `.env` file:
-   ```
-   APIFY_TOKEN=your_token_here
-   ```
+1. **Apify Account** - [apify.com](https://apify.com)
+2. **API Token** - Get from [Apify Console](https://console.apify.com/account/integrations), add `APIFY_TOKEN=your_token` to `.env`
+3. **Node.js 20.6+**
+4. **mcpc CLI** - `npm install -g @apify/mcpc`
 
 ## Output Formats
 
-- **Quick Answer** - Top 5 results displayed in chat (default, no file saved)
-- **CSV** - Full export or basic fields only
+- **Quick Answer** - Top 5 results displayed in chat (no file saved)
+- **CSV** - Full export with all fields
 - **JSON** - Full data export
 
 ## Pricing
@@ -82,21 +88,6 @@ Apify Actors use pay-per-result pricing. Check individual Actor pricing on [apif
 # Regenerate AGENTS.md and validate marketplace.json
 uv run scripts/generate_agents.py
 ```
-
-## Future Skills
-
-### Outcome-based
-- `brand-monitoring` - Review tracking, sentiment analysis
-- `competitor-intelligence` - Benchmarking, feature comparison
-- `influencer-discovery` - Find and vet influencers
-- `trend-analysis` - Hashtag tracking, viral content
-
-### Platform-based
-- `google-intelligence` - Maps, Search, Trends, Booking
-- `instagram-intelligence` - Profiles, Posts, Reels, Hashtags
-- `facebook-intelligence` - Pages, Posts, Groups, Ads
-- `tiktok-intelligence` - Profiles, Videos, Hashtags, Sounds
-- `youtube-intelligence` - Channels, Videos, Shorts, Comments
 
 ## Support
 
