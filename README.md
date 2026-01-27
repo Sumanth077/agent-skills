@@ -28,7 +28,7 @@ Official Apify agent skills for web scraping, data extraction, and automation. W
 /plugin marketplace add https://github.com/apify/agent-skills
 
 # Install a skill
-/plugin install apify-lead-generation@apify-agent-skills
+/plugin install apify-ultimate-scraper@apify-agent-skills
 ```
 
 ### Cursor / Windsurf
