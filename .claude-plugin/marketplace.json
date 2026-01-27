@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Official Apify agent skills for web scraping, data extraction, and automation",
-    "version": "1.4.0"
+    "version": "1.6.0"
   },
   "plugins": [
     {
@@ -200,7 +200,7 @@
         "influencer"
       ],
       "category": "data-extraction",
-      "version": "1.2.0"
+      "version": "1.4.0"
     }
   ]
 }

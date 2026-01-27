@@ -144,6 +144,16 @@ For complex tasks, chain multiple Actors:
 | **Competitor deep-dive** | `apify/facebook-pages-scraper` → | `apify/facebook-posts-scraper` |
 | **Local business analysis** | `compass/crawler-google-places` → | `compass/Google-Maps-Reviews-Scraper` |
 
+#### Can't Find a Suitable Actor?
+
+If none of the Actors above match the user's request, search the Apify Store directly:
+
+```bash
+export $(grep APIFY_TOKEN .env | xargs) && mcpc --json mcp.apify.com --header "Authorization: Bearer $APIFY_TOKEN" tools-call search-actors keywords:="SEARCH_KEYWORDS" limit:=10 offset:=0 category:="" | jq -r '.content[0].text'
+```
+
+Replace `SEARCH_KEYWORDS` with 1-3 simple terms (e.g., "LinkedIn profiles", "Amazon products", "Twitter").
+
 ### Step 2: Fetch Actor Schema
 
 Fetch the Actor's input schema and details dynamically using mcpc:
