@@ -21,6 +21,10 @@ Official Apify agent skills for web scraping, data extraction, and automation. W
 
 ## Installation
 
+```bash
+npx skills add apify/agent-skills
+```
+
 ### Claude Code
 
 ```bash
