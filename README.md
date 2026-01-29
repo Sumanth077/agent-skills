@@ -8,7 +8,7 @@ Official Apify agent skills for web scraping, data extraction, and automation. W
 | Name | Description | Documentation |
 |------|-------------|---------------|
 | `apify-actor-development` | Develop, debug, and deploy Apify Actors - serverless cloud programs for web scraping, automation, and data processing | [SKILL.md](skills/apify-actor-development/SKILL.md) |
-| `apify-actorization` | Convert existing projects into Apify Actors. Supports JavaScript/TypeScript (SDK with Actor.init/exit), Python (SDK with async context manager), and other languages (CLI-based wrapper scripts). | [SKILL.md](skills/apify-actorization/SKILL.md) |
+| `apify-actorization` | Convert existing projects into Apify Actors - serverless cloud programs. Actorize JavaScript/TypeScript (SDK with Actor.init/exit), Python (async context manager), or any language (CLI wrapper). Use when migrating code to Apify, wrapping CLI tools as Actors, or adding Actor SDK to existing projects. | [SKILL.md](skills/apify-actorization/SKILL.md) |
 | `apify-audience-analysis` | Understand audience demographics, preferences, behavior patterns, and engagement quality across Facebook, Instagram, YouTube, and TikTok | [SKILL.md](skills/apify-audience-analysis/SKILL.md) |
 | `apify-brand-reputation-monitoring` | Track reviews, ratings, sentiment, and brand mentions across Google Maps, Booking.com, TripAdvisor, Facebook, Instagram, YouTube, and TikTok | [SKILL.md](skills/apify-brand-reputation-monitoring/SKILL.md) |
 | `apify-competitor-intelligence` | Analyze competitor strategies, content, pricing, ads, and market positioning across Google Maps, Booking.com, Facebook, Instagram, YouTube, and TikTok | [SKILL.md](skills/apify-competitor-intelligence/SKILL.md) |

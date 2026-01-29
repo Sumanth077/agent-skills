@@ -1,15 +1,22 @@
 ---
 name: apify-actorization
-description: Convert existing projects into Apify Actors. Supports JavaScript/TypeScript (SDK with Actor.init/exit), Python (SDK with async context manager), and other languages (CLI-based wrapper scripts).
+description: Convert existing projects into Apify Actors - serverless cloud programs. Actorize JavaScript/TypeScript (SDK with Actor.init/exit), Python (async context manager), or any language (CLI wrapper). Use when migrating code to Apify, wrapping CLI tools as Actors, or adding Actor SDK to existing projects.
 ---
 
 # Apify Actorization
 
 Actorization converts existing software into reusable serverless applications compatible with the Apify platform. Actors are programs packaged as Docker images that accept well-defined JSON input, perform an action, and optionally produce structured JSON output.
 
+## Quick Start
+
+1. Run `apify init` in project root
+2. Wrap code with SDK lifecycle (see language-specific section below)
+3. Configure `.actor/input_schema.json`
+4. Test with `apify run --input '{"key": "value"}'`
+5. Deploy with `apify push`
+
 ## When to Use This Skill
 
-Use this skill when:
 - Converting an existing project to run on Apify platform
 - Adding Apify SDK integration to a project
 - Wrapping a CLI tool or script as an Actor
@@ -17,7 +24,7 @@ Use this skill when:
 
 ## Prerequisites
 
-Before actorizing a project, verify that `apify` CLI is installed:
+Verify `apify` CLI is installed:
 
 ```bash
 apify --help
@@ -45,9 +52,20 @@ If not logged in, check if `APIFY_TOKEN` environment variable is defined. If not
 apify login -t $APIFY_TOKEN
 ```
 
-## Actorization Workflow
+## Actorization Checklist
 
-### Step 1: Analyze the Project
+Copy this checklist to track progress:
+
+- [ ] Step 1: Analyze project (language, entry point, inputs, outputs)
+- [ ] Step 2: Run `apify init` to create Actor structure
+- [ ] Step 3: Apply language-specific SDK integration
+- [ ] Step 4: Configure `.actor/input_schema.json`
+- [ ] Step 5: Configure `.actor/output_schema.json` (if applicable)
+- [ ] Step 6: Update `.actor/actor.json` metadata
+- [ ] Step 7: Test locally with `apify run`
+- [ ] Step 8: Deploy with `apify push`
+
+## Step 1: Analyze the Project
 
 Before making changes, understand the project:
 
@@ -57,7 +75,7 @@ Before making changes, understand the project:
 4. **Identify outputs** - Files, console output, API responses
 5. **Check for state** - Does it need to persist data between runs?
 
-### Step 2: Initialize Actor Structure
+## Step 2: Initialize Actor Structure
 
 Run in the project root:
 
@@ -70,283 +88,33 @@ This creates:
 - `.actor/input_schema.json` - Input definition for the Apify Console
 - `Dockerfile` (if not present) - Container image definition
 
-### Step 3: Apply Language-Specific Changes
+## Step 3: Apply Language-Specific Changes
 
-#### JavaScript/TypeScript Projects
+Choose based on your project's language:
 
-**Install the Apify SDK:**
+- **JavaScript/TypeScript**: See [js-ts-actorization.md](references/js-ts-actorization.md)
+- **Python**: See [python-actorization.md](references/python-actorization.md)
+- **Other Languages (CLI-based)**: See [cli-actorization.md](references/cli-actorization.md)
 
-```bash
-npm install apify
-```
+### Quick Reference
 
-**Wrap the main code with Actor lifecycle methods:**
+| Language | Install | Wrap Code |
+|----------|---------|-----------|
+| JS/TS | `npm install apify` | `await Actor.init()` ... `await Actor.exit()` |
+| Python | `pip install apify` | `async with Actor:` |
+| Other | Use CLI in wrapper script | `apify actor:get-input` / `apify actor:push-data` |
 
-```javascript
-import { Actor } from 'apify';
+## Steps 4-6: Configure Schemas
 
-// Initialize connection to Apify platform
-await Actor.init();
+See [schemas-and-output.md](references/schemas-and-output.md) for detailed configuration of:
+- Input schema (`.actor/input_schema.json`)
+- Output schema (`.actor/output_schema.json`)
+- Actor configuration (`.actor/actor.json`)
+- State management (request queues, key-value stores)
 
-// ============================================
-// Your existing code goes here
-// ============================================
+Validate schemas against `@apify/json_schemas` npm package.
 
-// Example: Get input from Apify Console or API
-const input = await Actor.getInput();
-console.log('Input:', input);
-
-// Example: Your crawler or processing logic
-// const crawler = new PlaywrightCrawler({ ... });
-// await crawler.run([input.startUrl]);
-
-// Example: Push results to dataset
-// await Actor.pushData({ result: 'data' });
-
-// ============================================
-// End of your code
-// ============================================
-
-// Graceful shutdown
-await Actor.exit();
-```
-
-**Key points:**
-- `Actor.init()` configures storage to use Apify API when running on platform
-- `Actor.exit()` handles graceful shutdown and cleanup
-- Both calls must be awaited
-- Local execution remains unchanged - the SDK automatically detects the environment
-
-#### Python Projects
-
-**Install the Apify SDK:**
-
-```bash
-pip install apify
-```
-
-**Wrap the main function with the Actor context manager:**
-
-```python
-import asyncio
-from apify import Actor
-
-async def main() -> None:
-    async with Actor:
-        # ============================================
-        # Your existing code goes here
-        # ============================================
-
-        # Example: Get input from Apify Console or API
-        actor_input = await Actor.get_input()
-        print(f'Input: {actor_input}')
-
-        # Example: Your crawler or processing logic
-        # crawler = PlaywrightCrawler(...)
-        # await crawler.run([actor_input.get('startUrl')])
-
-        # Example: Push results to dataset
-        # await Actor.push_data({'result': 'data'})
-
-        # ============================================
-        # End of your code
-        # ============================================
-
-if __name__ == '__main__':
-    asyncio.run(main())
-```
-
-**Key points:**
-- `async with Actor:` handles both initialization and cleanup
-- Automatically manages platform event listeners and graceful shutdown
-- Local execution remains unchanged - the SDK automatically detects the environment
-
-#### Other Languages (CLI-based)
-
-For languages without an SDK (Go, Rust, Java, etc.), create a wrapper script:
-
-**1. Create `start.sh` in project root:**
-
-```bash
-#!/bin/bash
-set -e
-
-# Get input from Apify key-value store
-INPUT=$(apify actor:get-input)
-
-# Parse input values (adjust based on your input schema)
-MY_PARAM=$(echo "$INPUT" | jq -r '.myParam // "default"')
-
-# Run your application with the input
-./your-application --param "$MY_PARAM"
-
-# If your app writes to a file, push it to key-value store
-# apify actor:set-value OUTPUT --contentType application/json < output.json
-
-# Or push structured data to dataset
-# apify actor:push-data '{"result": "value"}'
-```
-
-**2. Update Dockerfile:**
-
-```dockerfile
-FROM your-base-image
-
-# Install apify-cli and jq
-RUN npm install -g apify-cli
-RUN apt-get update && apt-get install -y jq
-
-# Copy your application
-COPY . .
-
-# Build your application if needed
-RUN ./build.sh
-
-# Make start script executable
-RUN chmod +x start.sh
-
-# Run the wrapper script
-CMD ["./start.sh"]
-```
-
-### Step 4: Configure Input Schema
-
-Map your application's inputs to `.actor/input_schema.json`. Validate your schema against the official JSON Schema from the `@apify/json_schemas` npm package (`input.schema.json`).
-
-```json
-{
-    "title": "My Actor Input",
-    "type": "object",
-    "schemaVersion": 1,
-    "properties": {
-        "startUrl": {
-            "title": "Start URL",
-            "type": "string",
-            "description": "The URL to start processing from",
-            "editor": "textfield",
-            "prefill": "https://example.com"
-        },
-        "maxItems": {
-            "title": "Max Items",
-            "type": "integer",
-            "description": "Maximum number of items to process",
-            "default": 100,
-            "minimum": 1
-        }
-    },
-    "required": ["startUrl"]
-}
-```
-
-**Mapping guidelines:**
-- Command-line arguments → input schema properties
-- Environment variables → input schema or Actor env vars in actor.json
-- Config files → input schema with object/array types
-- Flatten deeply nested structures for better UX
-
-### Step 5: Configure Output
-
-Define output structure in `.actor/output_schema.json`. Validate against the JSON Schema from the `@apify/json_schemas` npm package (`output.schema.json`).
-
-**For table-like data (multiple items):**
-- Use `Actor.pushData()` (JS) or `Actor.push_data()` (Python)
-- Each item becomes a row in the dataset
-
-**For single files or blobs:**
-- Use key-value store: `Actor.setValue()` / `Actor.set_value()`
-- Get the public URL and include it in the dataset:
-
-```javascript
-// Store file with public access
-await Actor.setValue('report.pdf', pdfBuffer, { contentType: 'application/pdf' });
-
-// Get the public URL
-const storeInfo = await Actor.openKeyValueStore();
-const publicUrl = `https://api.apify.com/v2/key-value-stores/${storeInfo.id}/records/report.pdf`;
-
-// Include URL in dataset output
-await Actor.pushData({ reportUrl: publicUrl });
-```
-
-**For multiple files with a common prefix (collections):**
-
-```javascript
-// Store multiple files with a prefix
-for (const [name, data] of files) {
-    await Actor.setValue(`screenshots/${name}`, data, { contentType: 'image/png' });
-}
-// Files are accessible at: .../records/screenshots%2F{name}
-```
-
-### Step 6: Handle State (Optional)
-
-For long-running or resumable actors:
-
-**Request Queue** - For pausable, resumable task processing:
-
-The request queue works for any task processing, not just web scraping. Use a dummy URL with custom `uniqueKey` and `userData` for non-URL tasks:
-
-```javascript
-const requestQueue = await Actor.openRequestQueue();
-
-// Add tasks to the queue (works for any processing, not just URLs)
-await requestQueue.addRequest({
-    url: 'https://placeholder.local',  // Dummy URL for non-scraping tasks
-    uniqueKey: `task-${taskId}`,       // Unique identifier for deduplication
-    userData: { itemId: 123, action: 'process' },  // Your custom task data
-});
-
-// Process tasks from the queue (with Crawlee)
-const crawler = new BasicCrawler({
-    requestQueue,
-    requestHandler: async ({ request }) => {
-        const { itemId, action } = request.userData;
-        // Process your task using userData
-        await processTask(itemId, action);
-    },
-});
-await crawler.run();
-
-// Or manually consume without Crawlee:
-let request;
-while ((request = await requestQueue.fetchNextRequest())) {
-    await processTask(request.userData);
-    await requestQueue.markRequestHandled(request);
-}
-```
-
-**Key-Value Store** - For checkpoint state:
-```javascript
-// Save state
-await Actor.setValue('STATE', { processedCount: 100 });
-
-// Restore state on restart
-const state = await Actor.getValue('STATE') || { processedCount: 0 };
-```
-
-### Step 7: Update actor.json
-
-Configure `.actor/actor.json`. Validate against the JSON Schema from the `@apify/json_schemas` npm package (`actor.schema.json`).
-
-```json
-{
-    "actorSpecification": 1,
-    "name": "my-actor",
-    "title": "My Actor",
-    "description": "Brief description of what the actor does",
-    "version": "1.0.0",
-    "meta": {
-        "templateId": "ts_empty",
-        "generatedBy": "Claude Code with Claude Opus 4.5"
-    },
-    "input": "./input_schema.json",
-    "dockerfile": "../Dockerfile"
-}
-```
-
-**Important:** Fill in the `generatedBy` property with the tool/model used (e.g., "Claude Code with Claude Sonnet 4.5").
-
-### Step 8: Test Locally
+## Step 7: Test Locally
 
 Run the actor with inline input (for JS/TS and Python actors):
 
@@ -362,9 +130,7 @@ apify run --input-file ./test-input.json
 
 **Important:** Always use `apify run`, not `npm start` or `python main.py`. The CLI sets up the proper environment and storage.
 
-**Note:** For CLI-based actors (shell wrapper scripts), you may need to test the underlying application directly with mock input, as `apify run` requires a Node.js or Python entry point.
-
-### Step 9: Deploy
+## Step 8: Deploy
 
 ```bash
 apify push
@@ -372,96 +138,19 @@ apify push
 
 This uploads and builds your actor on the Apify platform.
 
-### Step 10: Monetization (Optional)
+## Monetization (Optional)
 
-After deploying, you can monetize your actor in the Apify Store. The recommended model for actorized projects is **Pay Per Event (PPE)**:
+After deploying, you can monetize your actor in the Apify Store. The recommended model is **Pay Per Event (PPE)**:
 
-**Pay Per Event** - Charge users based on specific events:
 - Per result/item scraped
 - Per page processed
 - Per API call made
-- Per file generated
 
-Configure PPE in the Apify Console under Actor > Monetization. Define:
-- Event name (e.g., "result", "page", "request")
-- Price per event
-- Charge for events in your code with `await Actor.charge('result')` or track via dataset items
+Configure PPE in the Apify Console under Actor > Monetization. Charge for events in your code with `await Actor.charge('result')`.
 
-Other monetization options:
-- **Rental** - Monthly subscription for unlimited usage
-- **Free** - Open source, community contribution
+Other options: **Rental** (monthly subscription) or **Free** (open source).
 
-## Common Patterns
-
-### Crawlee Projects
-
-Crawlee projects require minimal changes - just wrap with Actor lifecycle:
-
-```javascript
-import { Actor } from 'apify';
-import { PlaywrightCrawler } from 'crawlee';
-
-await Actor.init();
-
-// Get and validate input
-const input = await Actor.getInput();
-const {
-    startUrl = 'https://example.com',
-    maxItems = 100,
-} = input ?? {};
-
-let itemCount = 0;
-
-const crawler = new PlaywrightCrawler({
-    requestHandler: async ({ page, request, pushData }) => {
-        if (itemCount >= maxItems) return;
-
-        const title = await page.title();
-        await pushData({ url: request.url, title });
-        itemCount++;
-    },
-});
-
-await crawler.run([startUrl]);
-
-await Actor.exit();
-```
-
-### Express/HTTP Servers
-
-For web servers, use standby mode in actor.json:
-
-```json
-{
-    "actorSpecification": 1,
-    "name": "my-api",
-    "usesStandbyMode": true
-}
-```
-
-Then implement readiness probe. See [standby-mode.md](../apify-actor-development/references/standby-mode.md).
-
-### Batch Processing Scripts
-
-```javascript
-import { Actor } from 'apify';
-
-await Actor.init();
-
-const input = await Actor.getInput();
-const items = input.items || [];
-
-for (const item of items) {
-    const result = processItem(item);
-    await Actor.pushData(result);
-}
-
-await Actor.exit();
-```
-
-## Checklist
-
-Before deploying, verify:
+## Pre-Deployment Checklist
 
 - [ ] `.actor/actor.json` exists with correct name and description
 - [ ] `.actor/actor.json` validates against `@apify/json_schemas` (`actor.schema.json`)
@@ -476,6 +165,15 @@ Before deploying, verify:
 - [ ] Outputs use `Actor.pushData()` or key-value store
 - [ ] `apify run` executes successfully with test input
 - [ ] `generatedBy` is set in actor.json meta section
+
+## Apify MCP Tools
+
+If MCP server is configured, use these tools for documentation:
+
+- `search-apify-docs` - Search documentation
+- `fetch-apify-docs` - Get full doc pages
+
+Otherwise, the MCP Server url: `https://mcp.apify.com/?tools=docs`.
 
 ## Resources
 

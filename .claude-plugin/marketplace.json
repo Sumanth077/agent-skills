@@ -239,7 +239,7 @@
       "name": "apify-actorization",
       "source": "./skills/apify-actorization",
       "skills": "./",
-      "description": "Convert existing projects into Apify Actors. Supports JavaScript/TypeScript (SDK with Actor.init/exit), Python (SDK with async context manager), and other languages (CLI-based wrapper scripts).",
+      "description": "Convert existing projects into Apify Actors - serverless cloud programs. Actorize JavaScript/TypeScript (SDK with Actor.init/exit), Python (async context manager), or any language (CLI wrapper). Use when migrating code to Apify, wrapping CLI tools as Actors, or adding Actor SDK to existing projects.",
       "keywords": [
         "actorization",
         "convert",
