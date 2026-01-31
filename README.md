@@ -1,8 +1,8 @@
-# Apify Agent Skills
+# Apify agent skills
 
 Official Apify agent skills for web scraping, data extraction, and automation. Works with Claude Code, Cursor, Codex, Gemini CLI, and other AI coding assistants.
 
-## Available Skills
+## Available skills
 
 <!-- BEGIN_SKILLS_TABLE -->
 | Name | Description | Documentation |
@@ -17,7 +17,7 @@ Official Apify agent skills for web scraping, data extraction, and automation. W
 | `apify-lead-generation` | Generate B2B/B2C leads by scraping Google Maps, websites, Instagram, TikTok, Facebook, LinkedIn, YouTube, and Google Search using Apify Actors | [SKILL.md](skills/apify-lead-generation/SKILL.md) |
 | `apify-market-research` | Analyze market conditions, geographic opportunities, pricing, consumer behavior, and product validation across Google Maps, Facebook, Instagram, Booking.com, and TripAdvisor | [SKILL.md](skills/apify-market-research/SKILL.md) |
 | `apify-trend-analysis` | Discover and track emerging trends across Google Trends, Instagram, Facebook, YouTube, and TikTok to inform content strategy | [SKILL.md](skills/apify-trend-analysis/SKILL.md) |
-| `apify-ultimate-scraper` | Universal AI-powered web scraper for any platform. Scrape data from Instagram, Facebook, TikTok, YouTube, Google Maps, Google Search, Google Trends, Booking.com, and TripAdvisor for lead generation, brand monitoring, competitor analysis, influencer discovery, trend research, and more | [SKILL.md](skills/apify-ultimate-scraper/SKILL.md) |
+| `apify-ultimate-scraper` | Universal AI-powered web scraper for any platform. Scrape data from Instagram, Facebook, TikTok, YouTube, Google Maps, Google Search, Google Trends, Booking.com, and TripAdvisor for lead generation, brand monitoring, competitor analysis, influencer discovery, trend research, and more. | [SKILL.md](skills/apify-ultimate-scraper/SKILL.md) |
 <!-- END_SKILLS_TABLE -->
 
 ## Installation
@@ -49,33 +49,33 @@ Point your agent to the `agents/AGENTS.md` file which contains skill description
 # For Codex, reference agents/AGENTS.md in your configuration
 ```
 
-### Other AI Tools
+### Other AI tools
 
-Any AI tool that supports markdown context can use the skills by pointing to:
-- `agents/AGENTS.md` - Auto-generated skill index
-- `skills/*/SKILL.md` - Individual skill documentation
+Any AI tool that supports Markdown context can use the skills by pointing to:
+- `agents/AGENTS.md` - auto-generated skill index
+- `skills/*/SKILL.md` - individual skill documentation
 
 ## Prerequisites
 
-1. **Apify Account** - [apify.com](https://apify.com)
-2. **API Token** - Get from [Apify Console](https://console.apify.com/account/integrations), add `APIFY_TOKEN=your_token` to `.env`
+1. **Apify account** - [apify.com](https://apify.com)
+2. **API token** - get from [Apify Console](https://console.apify.com/account/integrations), add `APIFY_TOKEN=your_token` to `.env`
 3. **Node.js 20.6+**
-4. **mcpc CLI** - `npm install -g @apify/mcpc`
+4. **[mcpc CLI](https://github.com/apify/mcp-cli)** - `npm install -g @apify/mcpc`
 
-## Output Formats
+## Output formats
 
-- **Quick Answer** - Top 5 results displayed in chat (no file saved)
-- **CSV** - Full export with all fields
-- **JSON** - Full data export
+- **Quick answer** - top 5 results displayed in chat (no file saved)
+- **CSV** - full export with all fields
+- **JSON** - full data export
 
 ## Pricing
 
-Apify Actors use pay-per-result pricing. Check individual Actor pricing on [apify.com](https://apify.com).
+Apify Actors use pay-per-result pricing. Check individual Actor pricing on the [Apify platform](https://apify.com).
 
 ## Contributing
 
-1. Fork this repository
-2. Create your skill in `skills/your-skill-name/`
+1. Fork this repository.
+2. Create your skill in `skills/your-skill-name/`.
 3. Add `SKILL.md` with proper frontmatter:
    ```yaml
    ---
@@ -83,9 +83,9 @@ Apify Actors use pay-per-result pricing. Check individual Actor pricing on [apif
    description: What your skill does and when to use it
    ---
    ```
-4. Add entry to `.claude-plugin/marketplace.json`
-5. Run `uv run scripts/generate_agents.py` to update AGENTS.md
-6. Submit a pull request
+4. Add entry to `.claude-plugin/marketplace.json`.
+5. Run `uv run scripts/generate_agents.py` to update AGENTS.md.
+6. Submit a pull request.
 
 ## Development
 
