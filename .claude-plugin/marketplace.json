@@ -203,6 +203,29 @@
       "version": "1.4.0"
     },
     {
+      "name": "apify-ecommerce",
+      "source": "./skills/apify-ecommerce",
+      "skills": "./",
+      "description": "Scrape e-commerce data for pricing intelligence, customer sentiment, product research, quality analysis, and supply chain monitoring across Amazon, Walmart, eBay, IKEA, and 50+ marketplaces",
+      "keywords": [
+        "ecommerce",
+        "pricing",
+        "reviews",
+        "sentiment",
+        "products",
+        "sellers",
+        "amazon",
+        "walmart",
+        "ebay",
+        "MAP",
+        "competitor",
+        "research",
+        "supply-chain"
+      ],
+      "category": "data-extraction",
+      "version": "1.0.0"
+    },
+    {
       "name": "apify-actor-development",
       "source": "./skills/apify-actor-development",
       "skills": "./",
