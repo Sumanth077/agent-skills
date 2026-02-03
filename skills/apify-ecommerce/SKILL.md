@@ -1,6 +1,6 @@
 ---
 name: apify-ecommerce
-description: Scrape e-commerce data for pricing intelligence, customer sentiment, product research, quality analysis, and supply chain monitoring across Amazon, Walmart, eBay, IKEA, and 50+ marketplaces. Use when user asks to monitor prices, track competitors, analyze reviews, research products, find sellers, or detect unauthorized resellers.
+description: Scrape e-commerce data for pricing intelligence, customer reviews, and seller discovery across Amazon, Walmart, eBay, IKEA, and 50+ marketplaces. Use when user asks to monitor prices, track competitors, analyze reviews, research products, or find sellers.
 ---
 
 # E-commerce Data Extraction
@@ -8,27 +8,19 @@ description: Scrape e-commerce data for pricing intelligence, customer sentiment
 Extract product data, prices, reviews, and seller information from any e-commerce platform using Apify's E-commerce Scraping Tool.
 
 ## Prerequisites
-(No need to check upfront)
 
-- `.env` file with `APIFY_TOKEN`
+- `.env` file with `APIFY_TOKEN` (at `~/.claude/.env`)
 - Node.js 20.6+ (for native `--env-file` support)
-- `mcpc` CLI tool (for fetching Actor schemas)
 
 ## Workflow Selection
 
-Select the workflow based on user needs:
-
 | User Need | Workflow | Best For |
 |-----------|----------|----------|
-| Track competitor prices | Workflow 1: Pricing | Price monitoring, MAP compliance, dynamic pricing |
-| Analyze customer feedback | Workflow 2: Sentiment | Brand perception, rating trends, review analysis |
-| Research products/markets | Workflow 3: Research | Product benchmarking, category analysis, feature comparison |
-| Identify quality issues | Workflow 4: Quality | Defect detection, product improvement, QA feedback |
-| Monitor sellers/inventory | Workflow 5: Supply Chain | Unauthorized resellers, vendor evaluation, stock tracking |
+| Track prices, compare products | Workflow 1: Products & Pricing | Price monitoring, MAP compliance, competitor analysis. Add AI summary for insights. |
+| Analyze reviews (sentiment or quality) | Workflow 2: Reviews | Brand perception, customer sentiment, quality issues, defect patterns |
+| Find sellers across stores | Workflow 3: Sellers | Unauthorized resellers, vendor discovery via Google Shopping |
 
-## Workflow Progress Tracking
-
-Copy and use this checklist:
+## Progress Tracking
 
 ```
 Task Progress:
@@ -41,38 +33,59 @@ Task Progress:
 
 ---
 
-## Workflow 1: Competitive Pricing & MAP Monitoring
+## Workflow 1: Products & Pricing
 
-**Use case:** Track competitor prices, detect MAP violations, enable dynamic pricing strategies.
+**Use case:** Extract product data, prices, and stock status. Track competitor prices, detect MAP violations, benchmark products, or research markets.
 
-**Best for:** Pricing analysts, revenue managers, brand compliance teams.
+**Best for:** Pricing analysts, product managers, market researchers.
 
 ### Input Options
 
 | Input Type | Field | Description |
 |------------|-------|-------------|
-| Product URLs | `detailsUrls` | Direct URLs to product pages |
+| Product URLs | `detailsUrls` | Direct URLs to product pages (use object format) |
 | Category URLs | `listingUrls` | URLs to category/search result pages |
 | Keyword Search | `keyword` + `marketplaces` | Search term across selected marketplaces |
 
-### Example Input - Product URLs
+### Example - Product URLs
 ```json
 {
   "detailsUrls": [
-    "https://www.amazon.com/dp/B09V3KXJPB",
-    "https://www.walmart.com/ip/123456789"
+    {"url": "https://www.amazon.com/dp/B09V3KXJPB"},
+    {"url": "https://www.walmart.com/ip/123456789"}
   ],
   "additionalProperties": true
 }
 ```
 
-### Example Input - Keyword Search
+### Example - Keyword Search
 ```json
 {
   "keyword": "Samsung Galaxy S24",
-  "marketplaces": ["www.amazon.com", "www.walmart.com", "www.costco.com"],
+  "marketplaces": ["www.amazon.com", "www.walmart.com"],
   "additionalProperties": true,
   "maxProductResults": 50
+}
+```
+
+### Optional: AI Summary
+
+Add these fields to get AI-generated insights:
+
+| Field | Description |
+|-------|-------------|
+| `fieldsToAnalyze` | Data points to analyze: `["name", "offers", "brand", "description"]` |
+| `customPrompt` | Custom analysis instructions |
+
+**Example with AI summary:**
+```json
+{
+  "keyword": "robot vacuum",
+  "marketplaces": ["www.amazon.com"],
+  "maxProductResults": 50,
+  "additionalProperties": true,
+  "fieldsToAnalyze": ["name", "offers", "brand"],
+  "customPrompt": "Summarize price range and identify top brands"
 }
 ```
 
@@ -80,32 +93,33 @@ Task Progress:
 - `name` - Product name
 - `url` - Product URL
 - `offers.price` - Current price
-- `offers.priceCurrency` - Currency code
-- `brand` - Brand name
+- `offers.priceCurrency` - Currency code (may vary by seller region)
+- `brand.slogan` - Brand name (nested in object)
 - `image` - Product image URL
 - Additional seller/stock info when `additionalProperties: true`
 
+> **Note:** Currency may vary in results even for US searches, as prices reflect different seller regions.
+
 ---
 
-## Workflow 2: Customer Sentiment Analysis
+## Workflow 2: Customer Reviews
 
-**Use case:** Monitor customer sentiment from reviews, track brand perception, detect rating drops.
+**Use case:** Extract reviews for sentiment analysis, brand perception monitoring, or quality issue detection.
 
-**Best for:** Brand managers, customer experience teams, marketing managers.
+**Best for:** Brand managers, customer experience teams, QA teams, product managers.
 
 ### Input Options
 
 | Input Type | Field | Description |
 |------------|-------|-------------|
-| Review URLs | `reviewDetailsUrls` | Direct URLs to review pages |
 | Product URLs | `reviewListingUrls` | Product pages to extract reviews from |
 | Keyword Search | `keywordReviews` + `marketplacesReviews` | Search for product reviews by keyword |
 
-### Example Input - Review Extraction
+### Example - Extract Reviews from Product
 ```json
 {
   "reviewListingUrls": [
-    "https://www.amazon.com/dp/B09V3KXJPB"
+    {"url": "https://www.amazon.com/dp/B09V3KXJPB"}
   ],
   "sortReview": "Most recent",
   "additionalReviewProperties": true,
@@ -113,7 +127,7 @@ Task Progress:
 }
 ```
 
-### Example Input - Keyword Search
+### Example - Keyword Search
 ```json
 {
   "keywordReviews": "wireless earbuds",
@@ -124,111 +138,32 @@ Task Progress:
 }
 ```
 
-### Review Sort Options
-- `Most recent` - Latest reviews first
+### Sort Options
+- `Most recent` - Latest reviews first (recommended)
 - `Most relevant` - Platform default relevance
 - `Most helpful` - Highest voted reviews
 - `Highest rated` - 5-star reviews first
-- `Lowest rated` - 1-star reviews first (useful for quality analysis)
+- `Lowest rated` - 1-star reviews first
 
-### Output Fields
-- Review text, rating, date, reviewer name
-- Product metadata (name, brand, price)
-- Seller information when available
+> **Note:** The `sortReview: "Lowest rated"` option may not work consistently across all marketplaces. For quality analysis, collect a large sample and filter by rating in post-processing.
 
----
-
-## Workflow 3: Product & Market Research
-
-**Use case:** Benchmark products, analyze category saturation, compare features and pricing.
-
-**Best for:** Product managers, market researchers, category managers.
-
-### Input Options
-
-Same as Workflow 1, plus AI Summary capabilities:
-
-| Field | Description |
-|-------|-------------|
-| `fieldsToAnalyze` | Data points to pass to AI summary |
-| `customPrompt` | Custom AI analysis instructions |
-
-### Example Input - Market Research with AI Summary
-```json
-{
-  "keyword": "robot vacuum",
-  "marketplaces": ["www.amazon.com", "www.walmart.com"],
-  "additionalProperties": true,
-  "maxProductResults": 100,
-  "fieldsToAnalyze": ["name", "offers", "description", "additionalProperties"],
-  "customPrompt": "Analyze pricing trends, identify feature gaps, and summarize top product positioning strategies"
-}
-```
-
-### AI Summary Fields
-Available fields for `fieldsToAnalyze`:
-- `image` - Product images
-- `url` - Product URLs
-- `name` - Product names
-- `offers` - Pricing data
-- `brand` - Brand information
-- `description` - Product descriptions
-- `additionalProperties` - Extended attributes
-
----
-
-## Workflow 4: Product Quality Analysis
-
-**Use case:** Identify recurring quality issues, defect patterns, and improvement opportunities from reviews.
-
-**Best for:** Product managers, QA teams, R&D managers.
-
-### Input Configuration
-Use Workflow 2 (Sentiment) inputs with these recommendations:
-
-```json
-{
-  "reviewListingUrls": [
-    "https://www.amazon.com/dp/YOUR_PRODUCT_ASIN"
-  ],
-  "sortReview": "Lowest rated",
-  "additionalReviewProperties": true,
-  "maxReviewResults": 1000
-}
-```
-
-### Analysis Tips
-- Use `sortReview: "Lowest rated"` to prioritize negative feedback
+### Quality Analysis Tips
 - Set high `maxReviewResults` for statistical significance
-- Cross-reference with competitor products for benchmarking
 - Look for recurring keywords: "broke", "defect", "quality", "returned"
+- Filter results by rating if sorting doesn't work as expected
+- Cross-reference with competitor products for benchmarking
 
 ---
 
-## Workflow 5: Supply Chain & Seller Intelligence
+## Workflow 3: Seller Intelligence
 
-**Use case:** Monitor marketplace sellers, detect unauthorized resellers, evaluate vendor performance.
+**Use case:** Find sellers across stores, discover unauthorized resellers, evaluate vendor options.
 
 **Best for:** Brand protection teams, procurement, supply chain managers.
 
-### Input Options
+> **Note:** This workflow uses Google Shopping to find sellers across stores. Direct seller profile URLs are not reliably supported.
 
-| Input Type | Field | Description |
-|------------|-------|-------------|
-| Seller URLs | `sellerUrls` | Direct seller profile URLs |
-| Google Shopping | Multiple fields | Search for sellers across stores |
-
-### Example Input - Seller Profiles
-```json
-{
-  "sellerUrls": [
-    "https://www.amazon.com/sp?seller=A1B2C3D4E5"
-  ],
-  "maxSellerResults": 50
-}
-```
-
-### Example Input - Google Shopping Sellers
+### Input Configuration
 ```json
 {
   "googleShoppingSearchKeyword": "Nike Air Max 90",
@@ -239,11 +174,15 @@ Use Workflow 2 (Sentiment) inputs with these recommendations:
 }
 ```
 
-### Google Shopping Options
-- `scrapeProductsFromGoogleShopping` - Extract product details
-- `scrapeSellersFromGoogleShopping` - Extract seller/store list
-- `scrapeReviewsFromGoogleShopping` - Extract reviews
-- `countryCode` - Target country (affects currency, availability)
+### Options
+| Field | Description |
+|-------|-------------|
+| `googleShoppingSearchKeyword` | Product name to search |
+| `scrapeSellersFromGoogleShopping` | Set to `true` to extract sellers |
+| `scrapeProductsFromGoogleShopping` | Set to `true` to also extract product details |
+| `countryCode` | Target country (e.g., `us`, `uk`, `de`) |
+| `maxGoogleShoppingSellersPerProduct` | Max sellers per product |
+| `maxGoogleShoppingResults` | Total result limit |
 
 ---
 
@@ -261,37 +200,30 @@ Use Workflow 2 (Sentiment) inputs with these recommendations:
 ### IKEA (40+ country/language combinations)
 Supports all major IKEA regional sites with multiple language options.
 
-### Other
-`www.coles.com.au` (Australia)
+### Google Shopping
+Use for seller discovery across multiple stores.
 
 ---
 
 ## Running the Extraction
 
-### Step 1: Fetch Actor Schema (optional)
+### Step 1: Set Skill Path
 ```bash
-export $(grep APIFY_TOKEN .env | xargs) && mcpc --json mcp.apify.com --header "Authorization: Bearer $APIFY_TOKEN" tools-call fetch-actor-details actor:="apify/e-commerce-scraping-tool" | jq -r ".content"
+SKILL_PATH=~/.claude/skills/apify-ecommerce
 ```
 
-### Step 2: Ask User Preferences
-1. **Output format:**
-   - **Quick answer** - Display top results in chat (no file saved)
-   - **CSV** - Full export with all fields
-   - **JSON** - Full export in JSON format
-2. **Filename** - Descriptive name with date prefix
-
-### Step 3: Run the Script
+### Step 2: Run Script
 
 **Quick answer (display in chat):**
 ```bash
-node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
+node --env-file=~/.claude/.env $SKILL_PATH/reference/scripts/run_actor.js \
   --actor "apify/e-commerce-scraping-tool" \
   --input 'JSON_INPUT'
 ```
 
 **CSV export:**
 ```bash
-node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
+node --env-file=~/.claude/.env $SKILL_PATH/reference/scripts/run_actor.js \
   --actor "apify/e-commerce-scraping-tool" \
   --input 'JSON_INPUT' \
   --output YYYY-MM-DD_filename.csv \
@@ -300,24 +232,22 @@ node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
 
 **JSON export:**
 ```bash
-node --env-file=.env ${CLAUDE_PLUGIN_ROOT}/reference/scripts/run_actor.js \
+node --env-file=~/.claude/.env $SKILL_PATH/reference/scripts/run_actor.js \
   --actor "apify/e-commerce-scraping-tool" \
   --input 'JSON_INPUT' \
   --output YYYY-MM-DD_filename.json \
   --format json
 ```
 
-### Step 4: Summarize Results
+### Step 3: Summarize Results
 
-After completion, report:
-- Number of items extracted (products, reviews, or sellers)
-- File location and name
-- Key insights based on the workflow:
-  - **Pricing:** Price range, outliers, potential MAP violations
-  - **Sentiment:** Average rating, sentiment trends, common themes
-  - **Research:** Feature gaps, pricing bands, market positioning
-  - **Quality:** Recurring issues, defect patterns, improvement areas
-  - **Supply Chain:** Seller count, unauthorized sellers, inventory status
+Report:
+- Number of items extracted
+- File location (if exported)
+- Key insights based on workflow:
+  - **Products:** Price range, outliers, MAP violations
+  - **Reviews:** Average rating, sentiment trends, quality issues
+  - **Sellers:** Seller count, unauthorized sellers found
 
 ---
 
@@ -325,10 +255,9 @@ After completion, report:
 
 | Error | Solution |
 |-------|----------|
-| `APIFY_TOKEN not found` | Create `.env` file with `APIFY_TOKEN=your_token` |
-| `mcpc not found` | Install with `npm install -g @apify/mcpc` |
+| `APIFY_TOKEN not found` | Ensure `~/.claude/.env` contains `APIFY_TOKEN=your_token` |
 | `Actor not found` | Verify Actor ID: `apify/e-commerce-scraping-tool` |
-| `Run FAILED` | Check Apify console link in error output for details |
+| `Run FAILED` | Check Apify console link in error output |
 | `Timeout` | Reduce `maxProductResults` or increase `--timeout` |
 | `No results` | Verify URLs are valid and accessible |
 | `Invalid marketplace` | Check marketplace value matches supported list exactly |
