@@ -12,7 +12,7 @@ Discover and track emerging trends using Apify Actors to extract data from multi
 
 - `.env` file with `APIFY_TOKEN`
 - Node.js 20.6+ (for native `--env-file` support)
-- `mcpc` CLI tool (for fetching Actor schemas)
+- `mcpc` CLI tool: `npm install -g @apify/mcpc`
 
 ## Workflow
 
